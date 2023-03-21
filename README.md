@@ -6,5 +6,5 @@ L'objectif est de cr√©er une plateforme Web / Client lourd pour la gestion des √
 
 ## Informations pour lancer le projet :
 Pour lancer le projet il faut taper : 
-**npm run dev** sur l'ip : [127.0.0.1:3000](https://127.0.0.1:3000)
+**npm run dev** sur l'ip : [127.0.0.1:3000](http://127.0.0.1:3000)
 
