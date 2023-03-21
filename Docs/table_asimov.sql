@@ -9,6 +9,7 @@ CREATE TABLE Professeur(
    mailProfesseur VARCHAR(50) NOT NULL,
    estReferent boolean default false,
    estProviseur boolean NOT NULL Default false,
+   password VARCHAR(1000) NOT NULL,
    PRIMARY KEY(idProfesseur),
    UNIQUE(mailProfesseur)
 );
@@ -36,6 +37,7 @@ CREATE TABLE Eleve(
    mailEleve VARCHAR(50) NOT NULL,
    adresseEleve VARCHAR(50) NOT NULL,
    login VARCHAR(25),
+   password VARCHAR(1000) NOT NULL,
    idSection INT NOT NULL,
    PRIMARY KEY(idEleve),
    UNIQUE(mailEleve),
