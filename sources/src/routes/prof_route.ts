@@ -4,7 +4,7 @@ import express from 'express';
 export const router_prof = express.Router();
 
 const bodyParser = require("body-parser");
-let urlencodedParser = bodyParser.urlencoded({ extended: false })
+let urlencodedParser = bodyParser.urlencoded({ extended: true })
 
 // Routage des opérations CRUD
-router_prof.get('/auth', ctrl_prof.auth);
+router_prof.get('/auth', urlencodedParser, ctrl_prof.auth);
