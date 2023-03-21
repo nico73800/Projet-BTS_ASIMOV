@@ -1,9 +1,14 @@
+-- Fichier de requête SQL  
+-- Auteur : Nicolas CHALOYARD 
+
+
+-- Partie 1 / Creation BDD
 DROP DATABASE IF EXISTS Asimov;
 Create database Asimov;
 use Asimov;
 
 CREATE TABLE Professeur(
-   idProfesseur INT,
+   idProfesseur INT auto_increment,
    nomProfesseur VARCHAR(50) NOT NULL,
    prenomProfesseur VARCHAR(50) NOT NULL,
    mailProfesseur VARCHAR(50) NOT NULL,
@@ -64,3 +69,8 @@ CREATE TABLE Prof_Matiere(
    FOREIGN KEY(idProfesseur) REFERENCES Professeur(idProfesseur),
    FOREIGN KEY(idMatiere) REFERENCES Matiere(idMatiere)
 );
+
+
+-- Partie 2 / Insertion 
+INSERT INTO professeur (idProfesseur, nomProfesseur, prenomProfesseur, mailProfesseur, estReferent, estProviseur, password) VALUES ('', 'Louka', 'Lucas', 'louka.lucas@academ-gr.fr', '1', '1', SHA1('abcd'));
+INSERT INTO professeur (idProfesseur, nomProfesseur, prenomProfesseur, mailProfesseur, estReferent, estProviseur, password) VALUES ('', 'lulu', 'caca', 'lulu.caca@academ-gr.fr', '0', '0', SHA1('abcd'));
