@@ -5,15 +5,20 @@ import { Professeur } from '../../../types/classe_prof';
 import * as bdd from '../../connexion_bdd';
 
 
-export class profService {
-    public prof: Professeur;
-
-    findAll() {
-        bdd.module_connexion.query("SELECT * FROM Prof",(err, result, fields) => {
+export function findAll(id: number, pwd: string, req: any, res: any) {
+    if (id == 0 || pwd == '') {
+        res.render('connexion', {message: "Identifiant / mot de passe vide "});
+    } else {
+        bdd.module_connexion.query("SELECT nomProfesseur, prenomProfesseur FROM professeur WHERE idProfesseur = ? AND password = SHA1(?)", [id, pwd] ,(err, result, fields) => {
             if (!err) {
-                if (result == null) {
-                    // a finir
+                if (result.toString() == '') {
+                    res.render('connexion', {message: "Identifiant / mot de passe inconnu ou incorrect "});
+                } else {
+                    res.render('accueil', {message: result});
                 }
+            } else {
+                res.send(err);
+                // res.redirect('/');
             }
         });
     }

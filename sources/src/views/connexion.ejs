@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../public/css/bulma/css/bulma.css">
+    <title>Accueil</title>
+</head>
+<body>
+    <div class="box">
+        <h1 class="title"> Authentification </h1>
+        <% if (message !== undefined) { %>
+            <div>
+                <p class="is-warning"> <%= message %></p>
+            </div>
+        <% } %>
+        <div></div>
+        <form action="/prof/auth" method="get">
+            <div class="field">
+                <label class="label" for="usr_id"> Login / Identifiant unique </label>
+                <input class="input is-success" type="text" id="usr_id" name="usr_id" placeholder="Text input">
+            </div>
+
+            <div class="field">
+                <label class="label" for="pwd"> Mot de passe </label>
+                <div class="control">
+                    <input class="input" type="password" id="pwd" name="pwd" placeholder="Text input">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="type"> Êtes-vous </label>
+                <div class="control">
+                    <select class="select" name="type" id="type">
+                        <option selected value=""> Selectionnez une valeur </option>
+                        <option value="prof"> Enseignant </option>
+                        <option value="eleve"> Elève </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="field is-grouped">
+                <div class="control">
+                    <button class="button is-link">Se connecter</button>
+                </div>
+                <!-- <div class="control">
+                    <button class="button is-text" type="reset"></button>
+                </div> -->
+            </div>
+        </form>
+    </div>
+</body>
+</html>

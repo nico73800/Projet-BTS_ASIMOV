@@ -10,6 +10,7 @@ import bodyParser from 'body-parser';
 import { UnknownRoutesHandler } from './middlewares/unknownRoutes.handler';
 import { ExceptionsHandler } from './middlewares/exceptions.handler';
 import path from 'path';
+import { router_prof } from './routes/prof_route';
 const urlencodedparser = bodyParser.urlencoded({ extended: false});
 
 let app = express();
@@ -22,17 +23,17 @@ app.use(express.static('src'))
 app.use(express.json());
 
 
-// Ajouter les routes ici 
-//--
-
-
-//--
-
 // Accueil
 app.get('/', (req,res) => {
     // res.send(path.join('/', 'views'));
-    res.render('auth', {message:"coucou"});
+    res.render('connexion', {message:''});
 });
+
+// Ajouter les routes ici 
+//--
+app.use('/prof', router_prof);
+
+//--
 
 // Pour toutes les routes non définies
 app.all('*', UnknownRoutesHandler);
