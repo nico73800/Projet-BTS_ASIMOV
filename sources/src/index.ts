@@ -11,6 +11,11 @@ import { UnknownRoutesHandler } from './middlewares/unknownRoutes.handler';
 import { ExceptionsHandler } from './middlewares/exceptions.handler';
 import path from 'path';
 import { router_prof } from './routes/prof_route';
+import session from 'express-session';
+import { randomInt } from 'crypto';
+import cookieParser from 'cookie-parser';
+import sha1 from 'sha1';
+
 const urlencodedparser = bodyParser.urlencoded({ extended: false});
 
 let app = express();
@@ -23,10 +28,21 @@ app.use(express.static('src'))
 app.use(express.json());
 
 
+// Paramétrage des sessions 
+app.use(session({
+    secret: sha1("Azrhvezàhfroghi"),
+    saveUninitialized: true,
+    cookie: {maxAge: 1440},
+    resave: false
+}));
+
+app.use(cookieParser());
+
+
 // Accueil
 app.get('/', (req,res) => {
     // res.send(path.join('/', 'views'));
-    res.render('connexion', {message:''});
+    res.render('connexion', {message: {}});
 });
 
 // Ajouter les routes ici 

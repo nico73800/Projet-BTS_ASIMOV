@@ -10,22 +10,21 @@
 <body>
     <div class="box">
         <h1 class="title"> Authentification </h1>
-        <% if (message !== undefined) { %>
+        <% if (session.uncorrectAuth !== undefined) { %>
             <div>
-                <p class="is-warning"> <%= message %></p>
+                <p class="is-warning"> <%= session.uncorrectAuth %></p>
             </div>
         <% } %>
-        <div></div>
-        <form action="/prof/auth" method="post" enctype="application/x-www-form-urlencoded" >
+        <form action="/prof/auth" method="post" enctype="application/x-www-form-urlencoded">
             <div class="field">
                 <label class="label" for="usr_id"> Login / Identifiant unique </label>
-                <input class="input is-success" type="text" id="usr_id" name="usr_id" placeholder="Text input">
+                <input class="input is-success" type="text" id="usr_id" name="usr_id">
             </div>
 
             <div class="field">
                 <label class="label" for="pwd"> Mot de passe </label>
                 <div class="control">
-                    <input class="input" type="password" id="pwd" name="pwd" placeholder="Text input">
+                    <input class="input" type="password" id="pwd" name="pwd">
                 </div>
             </div>
 

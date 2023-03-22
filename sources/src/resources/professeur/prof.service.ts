@@ -3,22 +3,24 @@
  */
 import { Professeur } from '../../../types/classe_prof';
 import * as bdd from '../../connexion_bdd';
+// import * as session from 'express-session';
 
 
-export function findAll(id: number, pwd: string, req: any, res: any) {
-    if (id == 0 || pwd == '') {
-        res.render('connexion', {message: "Identifiant / mot de passe vide "});
+export function findProf(id: number, pwd: string, req: any, res: any) {
+    if ((id == 0 || pwd == '') || id == undefined || pwd == undefined) {
+        res.render('connexion', {message: "Identifiant / mot de passe vide invalide "});
     } else {
         bdd.module_connexion.query("SELECT nomProfesseur, prenomProfesseur FROM professeur WHERE idProfesseur = ? AND password = SHA1(?)", [id, pwd] ,(err, result, fields) => {
-            if (!err) {
+            try {
                 if (result.toString() == '') {
-                    res.render('connexion', {message: "Identifiant / mot de passe inconnu ou incorrect "});
+                    // session = req.session;
+                    // session.uncorrectAuth = "Authentification incorrecte";
+                    res.redirect('/');
                 } else {
-                    res.render('accueil', {message: result});
+                    res.render('accueil', {message: result});                    
                 }
-            } else {
-                res.send(err);
-                // res.redirect('/');
+            } catch (error) {
+                res.send(error);
             }
         });
     }
