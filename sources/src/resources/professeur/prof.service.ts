@@ -3,7 +3,6 @@
  */
 import { Professeur } from '../../../types/classe_prof';
 import * as bdd from '../../connexion_bdd';
-// import * as session from 'express-session';
 
 // Variable session
 let session;
@@ -23,7 +22,6 @@ export function findProf(id: number, pwd: string, req: any, res: any) {
                     session.userid = result;
                     console.log(req.session);
                     
-                    // res.render('accueil', {user:session.userid[0]['nomProfesseur'] + " " + session.userid[0]['prenomProfesseur']});
                     res.redirect('/prof/accueil');
                 }
             } catch (err) {

@@ -58,11 +58,8 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <a class="button is-primary" href="/prof/logout">
+              <a class="button is-danger" href="/prof/logout">
                 <strong>Log out</strong>
-              </a>
-              <a class="button is-light">
-                Log in
               </a>
             </div>
           </div>
@@ -73,6 +70,14 @@
     <% if (typeof user !== 'undefined' ) { %>
       <h1 class="title"> Authentifié en tant que : <%= user %></h1> 
     <% } %>
+
+    <section class="section">
+      <article> Sect1 </article>
+      <article> Sect2 </article>
+      <article> Sect3 </article>
+      <article> Sect4 </article>
+      <article> Sect5 </article>
+    </section>
 
 </body>
 </html>

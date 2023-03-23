@@ -63,7 +63,7 @@ app.all('*', UnknownRoutesHandler);
 
 // Gestion des erreurs 
 // Doit être le dernier use
-// app.use(ExceptionsHandler);
+app.use(ExceptionsHandler);
 
 // écoute du port 3000 sur l'adresse localhost
 app.listen(3000, "127.0.0.1", () => {
