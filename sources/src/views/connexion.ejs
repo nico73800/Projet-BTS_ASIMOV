@@ -10,7 +10,7 @@
 <body>
     <div class="box">
         <h1 class="title"> Authentification </h1>
-        <% if (session.uncorrectAuth !== undefined) { %>
+        <% if (typeof session !== 'undefined') { %>
             <div>
                 <p class="is-warning"> <%= session.uncorrectAuth %></p>
             </div>

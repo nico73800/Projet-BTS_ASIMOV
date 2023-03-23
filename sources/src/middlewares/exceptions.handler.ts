@@ -20,7 +20,7 @@ export const ExceptionsHandler = (err: any, req: Request, res: Response, next: N
    * Voir "The default error handler" dans la doc officielle indiquée plus haut
    */
   if (res.headersSent) {
-    return next(err)
+    return next(err);
   }
 
   /**

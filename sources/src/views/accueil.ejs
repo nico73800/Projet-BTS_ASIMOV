@@ -58,8 +58,8 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <a class="button is-primary">
-                <strong>Sign up</strong>
+              <a class="button is-primary" href="/prof/logout">
+                <strong>Log out</strong>
               </a>
               <a class="button is-light">
                 Log in
@@ -70,7 +70,9 @@
       </div>
     </nav>
     <h1 class="title"> Accueil de AsiNote </h1>
+    <% if (typeof user !== 'undefined' ) { %>
+      <h1 class="title"> Authentifié en tant que : <%= user %></h1> 
+    <% } %>
 
-    <%= message %>
 </body>
 </html>

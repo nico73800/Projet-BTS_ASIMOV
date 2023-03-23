@@ -29,20 +29,27 @@ app.use(express.json());
 
 
 // Paramétrage des sessions 
+app.use(cookieParser());
+
 app.use(session({
-    secret: sha1("Azrhvezàhfroghi"),
+    secret: "azertyuiop",
     saveUninitialized: true,
-    cookie: {maxAge: 1440},
+    // cookie: {maxAge: 30 * 60 * 1000},
+    cookie: {maxAge: 30 * 60 * 1000 * 1000000000000},
     resave: false
 }));
 
-app.use(cookieParser());
+app.use(function(req:any, res:any, next:any) {
+    res.locals.session = req.session;
+    next();
+})
 
+let sessions;
 
 // Accueil
 app.get('/', (req,res) => {
-    // res.send(path.join('/', 'views'));
-    res.render('connexion', {message: {}});
+    sessions = req.session;
+    res.render('connexion', {});
 });
 
 // Ajouter les routes ici 
@@ -56,7 +63,7 @@ app.all('*', UnknownRoutesHandler);
 
 // Gestion des erreurs 
 // Doit être le dernier use
-app.use(ExceptionsHandler);
+// app.use(ExceptionsHandler);
 
 // écoute du port 3000 sur l'adresse localhost
 app.listen(3000, "127.0.0.1", () => {
