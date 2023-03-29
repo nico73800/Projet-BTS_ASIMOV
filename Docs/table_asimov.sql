@@ -20,13 +20,13 @@ CREATE TABLE Professeur(
 );
 
 CREATE TABLE Matiere(
-   idMatiere INT,
+   idMatiere INT auto_increment,
    libelle VARCHAR(50),
    PRIMARY KEY(idMatiere)
 );
 
 CREATE TABLE Section(
-   idSection INT,
+   idSection INT auto_increment,
    libelleSection VARCHAR(50) NOT NULL,
    anneeSection VARCHAR(50),
    idProfesseur INT NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE Section(
 );
 
 CREATE TABLE Eleve(
-   idEleve INT,
+   idEleve INT auto_increment,
    nomEleve VARCHAR(50) NOT NULL,
    prenomEleve VARCHAR(50) NOT NULL,
    mailEleve VARCHAR(50) NOT NULL,
@@ -51,7 +51,7 @@ CREATE TABLE Eleve(
 );
 
 CREATE TABLE Notes(
-   idNotes INT,
+   idNotes INT auto_increment,
    note DECIMAL(3,2) NOT NULL CHECK (note <= 100.00 AND note >= 0.00),
    idProfesseur INT NOT NULL,
    idMatiere INT NOT NULL,

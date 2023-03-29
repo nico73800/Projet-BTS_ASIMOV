@@ -3,6 +3,7 @@
  */
 
 import * as profService from "./prof.service";
+import { getInfoProf } from './prof.service';
 let session;
 
 
@@ -22,7 +23,7 @@ export function accueil(req: any, res:any) {
     if (typeof session.userid == 'undefined') {
         res.redirect('/');
     } else {
-        console.log(session.userid[0]['nomProfesseur'] + " " + session.userid[0]['prenomProfesseur']);
+        console.log(session.userid[0]['nomProfesseur'] + " " + session.userid[0]['prenomProfesseur']);        
         res.render('accueil', {user: session.userid[0]['nomProfesseur'] + " " + session.userid[0]['prenomProfesseur']});
     }
     
