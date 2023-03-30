@@ -3,7 +3,7 @@
  * Auteur : Nicolas CHALOYARD
  */
 
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 // import createError from 'http-errors';
 import ejs from 'ejs';
 import bodyParser from 'body-parser';
@@ -12,11 +12,20 @@ import { ExceptionsHandler } from './middlewares/exceptions.handler';
 import path from 'path';
 import { router_prof } from './routes/prof_route';
 import session from 'express-session';
+import { Session } from 'express-session';
 import { randomInt } from 'crypto';
 import cookieParser from 'cookie-parser';
 import sha1 from 'sha1';
 
 const urlencodedparser = bodyParser.urlencoded({ extended: false});
+
+// Redeclaration du module session d'express
+declare module 'express-session' {
+    export interface Session {
+        userid: { [key: string]: any},
+        message: string;
+    }
+}
 
 let app = express();
 
@@ -26,7 +35,6 @@ app.set('views', path.join(__dirname, "views"));
 app.set('public', path.join(__dirname, "public"));
 app.use(express.static('src'))
 app.use(express.json());
-
 
 // Paramétrage des sessions 
 app.use(cookieParser());
@@ -39,7 +47,7 @@ app.use(session({
     resave: false
 }));
 
-app.use(function(req:any, res:any, next:any) {
+app.use(function(req:Request, res:Response, next:NextFunction) {
     res.locals.session = req.session;
     next();
 })
