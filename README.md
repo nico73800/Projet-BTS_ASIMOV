@@ -1,4 +1,4 @@
-# Projet-BTS_ASIMOV
+# Projet BTS : ASIMOV
 
 ## Présentation du projet : 
 Le projet Asimov est un projet de développement pour les épreuves de BTS SIO Option SLAM.
