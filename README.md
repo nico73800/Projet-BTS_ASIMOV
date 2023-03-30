@@ -8,7 +8,7 @@ L'objectif est de créer une plateforme Web / Client lourd pour la gestion des �
 Pour lancer le projet il faut taper : 
 **npm run dev** sur l'ip : [127.0.0.1:3000](http://127.0.0.1:3000)
 
-## V1 : Accès Professeur
+## V1 : Accès Professeur  / Authentification
 - Ajout de l'authentification
 - Modification de la page d'accueil (corrections bugs)
 
@@ -19,3 +19,6 @@ Notes techniques :
     * Ajout des types Request et Response d'Express
 - Correction de l'affichage au niveau de la page d'accueil : 
     * Un élément censé être récupérer par Express n'existait plus et empêchait le chargement de la page
+
+## V2 : Accès Professeur / CRUD notes 
+- Permettre la lecture, écriture, suppresion des notes
