@@ -20,5 +20,5 @@ Notes techniques :
 - Correction de l'affichage au niveau de la page d'accueil : 
     * Un élément censé être récupérer par Express n'existait plus et empêchait le chargement de la page
 
-## V2 : Accès Professeur / CRUD notes 
+## V2 : Accès Professeur / CRUD notes (non implémentée)
 - Permettre la lecture, écriture, suppresion des notes
