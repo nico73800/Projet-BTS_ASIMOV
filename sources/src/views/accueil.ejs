@@ -10,18 +10,23 @@
 <body>
     <%- include('menu.ejs') %>
 
-    <h1 class="title"> Accueil d'AsiNote </h1>
-    <% if (typeof user !== 'undefined' ) { %>
-      <h1 class="title"> Authentifié en tant que : <%= user %></h1> 
-      
-      <section class="section">
-        <article> Sect1 </article>
-        <article> Sect2 </article>
-        <article> Sect3 </article>
-        <article> Sect4 </article>
-        <article> Sect5 </article>
-      </section>
+    <div class="box">
+      <h1 class="title"> Accueil d'AsiNote </h1>
+      <% if (typeof user !== 'undefined' ) { %>
+        <h1 class="title"> Authentifié en tant que : <%= user %></h1> 
+        
+        <section class="section">
+          <article> Sect1 </article>
+          <article> Sect2 </article>
+          <article> Sect3 </article>
+          <article> Sect4 </article>
+          <article> Sect5 </article>
+        </section>
+      <% } else { %>
+        <h1 class="title"> Problème avec les idenfitifiants </h1>
+        <h2 class="subtitle"> Aucun accès autorisés </h2>
       <% } %>
+    </div>
 
 </body>
 </html>
