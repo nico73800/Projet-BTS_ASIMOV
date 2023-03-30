@@ -14,6 +14,8 @@ Pour lancer le projet il faut taper :
 
 Notes techniques :
 - Ajout et correction des bugs au niveau des sessions qui ne fonctionnaient pas :
-    * Redéclaration du module Session d'**Express-session**
+    * Redéclaration du module Session d'**Express-session** (dans [index.ts](https://github.com/nico73800/Projet-BTS_ASIMOV/blob/main/sources/src/index.ts))
+- Modification des signatures des fonctions : 
+    * Ajout des types Request et Response d'Express
 - Correction de l'affichage au niveau de la page d'accueil : 
     * Un élément censé être récupérer par Express n'existait plus et empêchait le chargement de la page
