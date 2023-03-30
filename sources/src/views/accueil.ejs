@@ -16,15 +16,25 @@
         <h1 class="title"> Authentifié en tant que : <%= user %></h1> 
         
         <section class="section">
-          <article> Sect1 </article>
-          <article> Sect2 </article>
+          <article> <h2 class="subtitle">Mes Matières : </h2>
+            <% matiere.forEach(element => { %>
+              <p> - <%= element['libelle'] %> </p>
+            <% }) %>
+          </article>
+          <article> 
+            <% if (typeof classeProf == 'undefined') { %>
+              <p> Aucune classe </p>
+            <% } else { %>
+              Mes classes :  <%= classeProf %>
+            <% } %>
+          </article>
           <article> Sect3 </article>
-          <article> Sect4 </article>
+          <article> Sect4 </article>    
           <article> Sect5 </article>
         </section>
       <% } else { %>
         <h1 class="title"> Problème avec les idenfitifiants </h1>
-        <h2 class="subtitle"> Aucun accès autorisés </h2>
+        <h2 class="subtitle"> Aucun accès autorisé </h2>
       <% } %>
     </div>
 

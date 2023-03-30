@@ -4,7 +4,6 @@
 
 import { Request, Response } from "express";
 import * as profService from "./prof.service";
-import { getInfoProf } from './prof.service';
 let session;
 
 
@@ -28,8 +27,13 @@ export function accueil(req: Request, res: Response) {
         res.redirect('/');
     } else {
         console.log(session.userid[0]['nomProfesseur'] + " " + session.userid[0]['prenomProfesseur']);
-        // res.send(session.userid[0]['nomProfesseur'] + " " + session.userid[0]['prenomProfesseur']);
-        res.render('accueil', {user: session.userid[0]['nomProfesseur'] + " " + session.userid[0]['prenomProfesseur']});
+        profService.getMatiereProf(session.userid[0]['idProfesseur'], req, res);
+        profService.getClasseProf(session.userid[0]['idProfesseur'], req, res);
+        if (typeof session.error !== 'undefined') {
+            console.log(session.error);
+            res.send(session.error);
+        } else {
+            res.render('accueil', {user: session.userid[0]['nomProfesseur'] + " " + session.userid[0]['prenomProfesseur'], matiere: session.matiereProf, classeProf: session.classeProf});
+        }
     }
-    
 }

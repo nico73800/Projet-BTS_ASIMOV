@@ -39,15 +39,36 @@ export function findProf(id: number, pwd: string, req: Request, res: Response) {
     }
 }
 
-export function getInfoProf(idProf:number, req: Request, res: Response) {
-        bdd.module_connexion.query(
-            "SELECT idMatiere, libelle FROM Matiere m, Prof_Matiere pm, Professeur p WHERE p.idProfesseur = pm.idProfesseur AND pm.idMatiere = m.idMatiere AND p.idProfesseur = ?", 
-            [idProf], (err, result, fields) => {
-                if (err) {
-                    return err;
-                } else {
-                    return result;
-                }
-            });
-    
+export function getMatiereProf(idProf:number, req: Request, res: Response) {
+    bdd.module_connexion.query(
+        "SELECT m.idMatiere, libelle FROM Matiere m, Prof_Matiere pm  WHERE pm.idMatiere = m.idMatiere AND pm.idProfesseur = ?", 
+        [idProf], (err, result, fields) => {
+            if (err) {
+                session = req.session;
+                session.error = err.message.toString();
+            } else {
+                session = req.session;
+                session.matiereProf = result;
+                console.log(session.matiereProf);
+                
+                // res.redirect('/prof/accueil');
+            }
+        });
+}
+
+export function getClasseProf(idProf:number, req: Request, res: Response) {
+    bdd.module_connexion.query(
+        "SELECT idSection, libelleSection FROM Section WHERE anneeSection='2023' AND idProfesseur = ?", 
+        [idProf], (err, result, fields) => {
+            if (err) {
+                session = req.session;
+                session.error = err.message.toString();
+            } else {
+                session = req.session;
+                session.classeProf = result;
+                console.log(session.classeProf);
+                
+                // res.redirect('/prof/accueil');
+            }
+        });
 }

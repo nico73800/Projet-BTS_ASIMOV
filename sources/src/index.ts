@@ -24,6 +24,9 @@ declare module 'express-session' {
     export interface Session {
         userid: { [key: string]: any},
         message: string;
+        matiereProf: { [key: string]: any};
+        classeProf: { [key: string]: any};
+        error: string;
     }
 }
 
@@ -71,7 +74,7 @@ app.all('*', UnknownRoutesHandler);
 
 // Gestion des erreurs 
 // Doit être le dernier use
-app.use(ExceptionsHandler);
+// app.use(ExceptionsHandler);
 
 // écoute du port 3000 sur l'adresse localhost
 app.listen(3000, "127.0.0.1", () => {
