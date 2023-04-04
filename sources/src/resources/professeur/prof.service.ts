@@ -5,34 +5,34 @@ import { Professeur } from '../../../types/classe_prof';
 import * as bdd from '../../connexion_bdd';
 import { Matiere } from '../../../types/class_matiere';
 import { Request, Response } from 'express';
+// import sessions from 'express-session';
 
-// Variable session
 let session;
 
 export function findProf(id: number, pwd: string, req: Request, res: Response) {
-    if ((id == 0 || pwd == '') || id == undefined || pwd == undefined) {
-        session = req.session;
+    session = req.session;
+    if ((id == 0 || pwd == '') || (id == undefined || pwd == undefined)) {
         session.message = "Identifiant / mot de passe vide invalide ";
-        res.render('connexion', {});
+        console.log(session.message);
+        // res.render('connexion', {message:session.message});
     } else {
-        
         bdd.module_connexion.query("SELECT idProfesseur, nomProfesseur, prenomProfesseur FROM Professeur WHERE idProfesseur = ? AND password = SHA1(?)", [id, pwd] ,(err, result, fields) => {
+            session = req.session;
             if (err) {
-                res.send("err" + err.message);
-
+                session.message = "err" + err.message;
             } else {
                 // res.redirect('/');
                 if (result.toString() == '') {
-                    session = req.session;
                     session.message = "Authentification incorrecte";
-                    console.log(session);
-                    res.redirect('/');
+                    // req.session.save();
+                    // res.redirect('/');
+                    // res.send(result);
                 } else {
-                    session = req.session;
                     session.userid = result;
-                    console.log(req.session);
-                    
-                    res.redirect('/prof/accueil');
+                    console.log(session.userid);
+                    // req.session.save();
+                    // console.log(req.session);
+                    // res.redirect('/prof/accueil');
                 }
             }
         });
@@ -40,35 +40,44 @@ export function findProf(id: number, pwd: string, req: Request, res: Response) {
 }
 
 export function getMatiereProf(idProf:number, req: Request, res: Response) {
+    session = req.session;
     bdd.module_connexion.query(
-        "SELECT m.idMatiere, libelle FROM Matiere m, Prof_Matiere pm  WHERE pm.idMatiere = m.idMatiere AND pm.idProfesseur = ?", 
+        "SELECT m.idMatiere, libelle FROM Matiere m, Prof_Matiere pm WHERE pm.idMatiere = m.idMatiere AND pm.idProfesseur = ?", 
         [idProf], (err, result, fields) => {
+            session = req.session;
             if (err) {
-                session = req.session;
                 session.error = err.message.toString();
             } else {
-                session = req.session;
-                session.matiereProf = result;
-                console.log(session.matiereProf);
+                if (result.toString() == '') {
+                    session.error = "Pas de données";
+                } else {
+                    session.matiereProf = result;
+                    console.log(session);
+                }
+                // req.session.save();
+                // req.session.save();
+                // console.log(session.matiereProf);
                 
                 // res.redirect('/prof/accueil');
             }
+            // session.save();
         });
 }
 
-export function getClasseProf(idProf:number, req: Request, res: Response) {
+export function getClasseProf(idProf: number, req: Request, res: Response) {
+    let session = req.session;
     bdd.module_connexion.query(
-        "SELECT idSection, libelleSection FROM Section WHERE anneeSection='2023' AND idProfesseur = ?", 
+        "SELECT idSection, libelleSection FROM Section WHERE idProfesseur = ?", 
         [idProf], (err, result, fields) => {
             if (err) {
-                session = req.session;
                 session.error = err.message.toString();
             } else {
-                session = req.session;
                 session.classeProf = result;
-                console.log(session.classeProf);
+                // req.session.save();
+                // console.log(session.classeProf);
                 
                 // res.redirect('/prof/accueil');
             }
+            // session.save();
         });
 }

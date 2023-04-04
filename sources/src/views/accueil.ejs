@@ -17,15 +17,17 @@
         
         <section class="section">
           <article> <h2 class="subtitle">Mes Matières : </h2>
-            <% matiere.forEach(element => { %>
-              <p> - <%= element['libelle'] %> </p>
-            <% }) %>
+            <%= matiere %>
+
+            <%# matiere.forEach(element => { %>
+              <p> - <%#= element['libelle'] %> </p>
+            <%# }) %>
           </article>
           <article> 
-            <% if (typeof classeProf == 'undefined') { %>
+            <% if (typeof classe == 'undefined') { %>
               <p> Aucune classe </p>
             <% } else { %>
-              Mes classes :  <%= classeProf %>
+              Mes classes :  <%= classe %>
             <% } %>
           </article>
           <article> Sect3 </article>

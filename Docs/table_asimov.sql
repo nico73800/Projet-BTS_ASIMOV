@@ -84,9 +84,9 @@ INSERT INTO Section (libelleSection, anneeSection, idProfesseur) VALUES("1ere Sp
 
 INSERT INTO Section (libelleSection, anneeSection, idProfesseur) VALUES("2nd G", "2023", 1);
 
-INSERT INTO Eleve (idEleve, nomEleve, prenomEleve, mailEleve, adresseEleve, login, password, idSection) VALUES (NULL, 'bobi', 'boba', 'bobi.boba@mail.com', '1 rue des licornes, 12345 LicorneVille', 'bobib', 'abcd', '1');
+INSERT INTO Eleve (idEleve, nomEleve, prenomEleve, mailEleve, adresseEleve, login, password, idSection) VALUES (NULL, 'bobi', 'boba', 'bobi.boba@mail.com', '1 rue des licornes, 12345 LicorneVille', 'bobib', SHA1('abcd'), '1');
 
-INSERT INTO Eleve (idEleve, nomEleve, prenomEleve, mailEleve, adresseEleve, login, password, idSection) VALUES (NULL, 'allé', 'mot', 'allé.motboba@mail.com', '1 rue des mot, 12345 motVille', 'allém', 'abcd', '1');
+INSERT INTO Eleve (idEleve, nomEleve, prenomEleve, mailEleve, adresseEleve, login, password, idSection) VALUES (NULL, 'allé', 'mot', 'allé.motboba@mail.com', '1 rue des mot, 12345 motVille', 'allém', SHA1('abcd'), '1');
 
 INSERT INTO Matiere (idMatiere, libelle) VALUES (NULL, "Français");
 

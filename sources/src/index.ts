@@ -11,17 +11,16 @@ import { UnknownRoutesHandler } from './middlewares/unknownRoutes.handler';
 import { ExceptionsHandler } from './middlewares/exceptions.handler';
 import path from 'path';
 import { router_prof } from './routes/prof_route';
-import session from 'express-session';
-import { Session } from 'express-session';
-import { randomInt } from 'crypto';
+import sessions from 'express-session';
 import cookieParser from 'cookie-parser';
-import sha1 from 'sha1';
 
-const urlencodedparser = bodyParser.urlencoded({ extended: false});
+
+const urlencodedparser = bodyParser.urlencoded({ extended: true});
 
 // Redeclaration du module session d'express
+
 declare module 'express-session' {
-    export interface Session {
+    export interface SessionData {
         userid: { [key: string]: any},
         message: string;
         matiereProf: { [key: string]: any};
@@ -37,30 +36,38 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, "views"));
 app.set('public', path.join(__dirname, "public"));
 app.use(express.static('src'))
+// app.use(urlencodedparser);
 app.use(express.json());
+
+// const CI = process.env.CI;
+// const server = express().disable('x-powered-by');
 
 // Paramétrage des sessions 
 app.use(cookieParser());
 
-app.use(session({
+app.use(sessions({
     secret: "azertyuiop",
     saveUninitialized: true,
     // cookie: {maxAge: 30 * 60 * 1000},
-    cookie: {maxAge: 30 * 60 * 1000 * 1000000000000},
+    cookie: { secure: true, maxAge: 30 * 60 * 1000 * 10000 },
     resave: false
 }));
 
 app.use(function(req:Request, res:Response, next:NextFunction) {
-    res.locals.session = req.session;
+    // res.locals = req.session;
+    // res.locals.message = req.session.message;
+    // res.locals.error = req.session.error;
+    // res.locals.session = req.session;
     next();
 })
 
-let sessions;
+// let session;
 
 // Accueil
-app.get('/', (req,res) => {
-    sessions = req.session;
-    res.render('connexion', {});
+app.get('/', function(req:Request, res:Response) {
+    // res.locals.message = req.session.message;
+    // res.locals.error = req.session.error;
+    res.render('connexion');
 });
 
 // Ajouter les routes ici 
@@ -78,5 +85,5 @@ app.all('*', UnknownRoutesHandler);
 
 // écoute du port 3000 sur l'adresse localhost
 app.listen(3000, "127.0.0.1", () => {
-    console.log("Projet fonctionnel")
+    console.log("Projet fonctionnel");
 });
