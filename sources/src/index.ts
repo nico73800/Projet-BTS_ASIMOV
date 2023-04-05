@@ -3,20 +3,18 @@
  * Auteur : Nicolas CHALOYARD
  */
 
-import express from 'express';
 import ejs from 'ejs';
+import express from 'express';
 import bodyParser from 'body-parser';
 import { UnknownRoutesHandler } from './middlewares/unknownRoutes.handler';
-import { ExceptionsHandler } from './middlewares/exceptions.handler';
 import path from 'path';
 import { router_prof } from './routes/prof_route';
+import cookieParser from 'cookie-parser';
+import { ExceptionsHandler } from './middlewares/exceptions.handler';
+import { MemoryStore } from 'express-session';
 import session from 'express-session';
 import { NextFunction } from 'express';
-import cookieParser from 'cookie-parser';
-import { createClient } from "redis";
-import RedisStore from 'connect-redis';
 
-const urlencodedparser = bodyParser.urlencoded({ extended: true});
 
 let app = express();
 
@@ -27,53 +25,45 @@ app.set('public', path.join(__dirname, "public"));
 app.use(express.static('src'))
 app.use(express.json());
 
-const redisClient = createClient();
-
-redisClient.on('error', err => console.log("Redis Client Error", err));
-
-// Pas oublié de start le server redis sur WSL Debian
-redisClient.connect();
-redisClient.set('key', 'value');
-const redisStore = (session);
 
 // Paramétrage des sessions 
 app.use(cookieParser());
 app.use(session({
+    store: new MemoryStore(),
     secret: "azertyuiop",
     saveUninitialized: false,
     // cookie: {maxAge: 30 * 60 * 1000},
     cookie: { 
-        secure: true, 
+        secure: false, 
         maxAge: 30 * 60 * 1000 * 10000,
         httpOnly: false
     },
-    resave: true,
+    name:'session',
+    resave: false,
 }));
+
 
 // Redeclaration du module session d'express
 declare module 'express-session' {
     export interface Session {
         userid: { [key: string]: any},
-        message?: string;
-        matiereProf?: { [key: string]: any};
-        classeProf?: { [key: string]: any};
-        error?: string;
+        message: string;
+        matiereProf: { [key: string]: any};
+        classeProf: { [key: string]: any};
+        error: string;
     }
 }
 
 // Accueil
 app.get('/', function(req, res, next) {
+    express.request.session = req.session;
     // req.session = express.request.session;
     res.render('connexion');
 });
 
 app.use(function (req, res, next) {
-    let err = req.session.error;
-    req.session.error = "";
-    if (err) {
-        res.locals.message = err;
-        next();
-    }
+    express.request.session = req.session;
+    next();
 });
 
 // Ajouter les routes ici 

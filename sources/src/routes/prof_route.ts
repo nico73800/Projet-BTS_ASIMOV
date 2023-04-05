@@ -8,13 +8,14 @@ const bodyParser = require("body-parser");
 let urlencodedParser = bodyParser.urlencoded({ extended: true })
 
 // Routage des opérations CRUD
-// router_prof.post('/auth', urlencodedParser, ctrl_prof.auth);
 router_prof.post('/accueil', urlencodedParser, (req: Request, res: Response) => {
-    express.request.session = req.session;
+    // req.session = express.request.session;
+    // express.request.session = req.session;
     ctrl_prof.accueil(req,res);
 });
-// router_prof.get('/accueil', ctrl_prof.accueil);
+
 router_prof.get('/logout', (req: Request, res: Response) => {
-    express.request.session = req.session;
+    // req.session = express.request.session;
+    // express.request.session = req.session;
     ctrl_prof.logout(req,res);
 });
