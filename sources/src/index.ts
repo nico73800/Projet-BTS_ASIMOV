@@ -3,31 +3,20 @@
  * Auteur : Nicolas CHALOYARD
  */
 
-import express, { NextFunction, Request, Response } from 'express';
-// import createError from 'http-errors';
+import express from 'express';
 import ejs from 'ejs';
 import bodyParser from 'body-parser';
 import { UnknownRoutesHandler } from './middlewares/unknownRoutes.handler';
 import { ExceptionsHandler } from './middlewares/exceptions.handler';
 import path from 'path';
 import { router_prof } from './routes/prof_route';
-import sessions from 'express-session';
+import session from 'express-session';
+import { NextFunction } from 'express';
 import cookieParser from 'cookie-parser';
-
+import { createClient } from "redis";
+import RedisStore from 'connect-redis';
 
 const urlencodedparser = bodyParser.urlencoded({ extended: true});
-
-// Redeclaration du module session d'express
-
-declare module 'express-session' {
-    export interface SessionData {
-        userid: { [key: string]: any},
-        message: string;
-        matiereProf: { [key: string]: any};
-        classeProf: { [key: string]: any};
-        error: string;
-    }
-}
 
 let app = express();
 
@@ -36,38 +25,55 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, "views"));
 app.set('public', path.join(__dirname, "public"));
 app.use(express.static('src'))
-// app.use(urlencodedparser);
 app.use(express.json());
 
-// const CI = process.env.CI;
-// const server = express().disable('x-powered-by');
+const redisClient = createClient();
+
+redisClient.on('error', err => console.log("Redis Client Error", err));
+
+// Pas oublié de start le server redis sur WSL Debian
+redisClient.connect();
+redisClient.set('key', 'value');
+const redisStore = (session);
 
 // Paramétrage des sessions 
 app.use(cookieParser());
-
-app.use(sessions({
+app.use(session({
     secret: "azertyuiop",
-    saveUninitialized: true,
+    saveUninitialized: false,
     // cookie: {maxAge: 30 * 60 * 1000},
-    cookie: { secure: true, maxAge: 30 * 60 * 1000 * 10000 },
-    resave: false
+    cookie: { 
+        secure: true, 
+        maxAge: 30 * 60 * 1000 * 10000,
+        httpOnly: false
+    },
+    resave: true,
 }));
 
-app.use(function(req:Request, res:Response, next:NextFunction) {
-    // res.locals = req.session;
-    // res.locals.message = req.session.message;
-    // res.locals.error = req.session.error;
-    // res.locals.session = req.session;
-    next();
-})
-
-// let session;
+// Redeclaration du module session d'express
+declare module 'express-session' {
+    export interface Session {
+        userid: { [key: string]: any},
+        message?: string;
+        matiereProf?: { [key: string]: any};
+        classeProf?: { [key: string]: any};
+        error?: string;
+    }
+}
 
 // Accueil
-app.get('/', function(req:Request, res:Response) {
-    // res.locals.message = req.session.message;
-    // res.locals.error = req.session.error;
+app.get('/', function(req, res, next) {
+    // req.session = express.request.session;
     res.render('connexion');
+});
+
+app.use(function (req, res, next) {
+    let err = req.session.error;
+    req.session.error = "";
+    if (err) {
+        res.locals.message = err;
+        next();
+    }
 });
 
 // Ajouter les routes ici 
@@ -81,7 +87,7 @@ app.all('*', UnknownRoutesHandler);
 
 // Gestion des erreurs 
 // Doit être le dernier use
-// app.use(ExceptionsHandler);
+app.use(ExceptionsHandler);
 
 // écoute du port 3000 sur l'adresse localhost
 app.listen(3000, "127.0.0.1", () => {

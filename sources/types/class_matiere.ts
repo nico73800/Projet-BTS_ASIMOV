@@ -3,10 +3,10 @@
  * Auteur : Nicolas CHALOYARD
  */
 
-import { RowDataPacket } from "mysql2";
+// import { RowDataPacket } from "mysql2";
 
 
-export interface Matiere extends RowDataPacket {
+export interface Matiere {
     idMatiere: number;
     libelle: string;
 
