@@ -1,5 +1,6 @@
 /**
  * Controleur Prof 
+ * Auteur : NChaloyard
  */
 
 import { Request, Response, NextFunction } from 'express';
@@ -47,7 +48,7 @@ export function accueil_noauth(req: Request, res: Response) {
     } else {
         res.render('accueil', { user: req.session.userid[0]['nomProfesseur'] + " " + req.session['userid'][0]['prenomProfesseur']});
     }
-   
+
 }
 
 export function matiere(req: Request, res: Response) {
