@@ -131,4 +131,4 @@ dist
 
 # VsCode
 .vscode
-sources/src/connexion_bdd.ts
+./sources/src/connexion_bdd.ts

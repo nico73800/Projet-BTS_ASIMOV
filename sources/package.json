@@ -19,6 +19,7 @@
     "@types/iniparser": "^0.0.29",
     "@types/node": "^18.15.2",
     "@types/redis": "^4.0.11",
+    "@types/uuid": "^9.0.1",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.2",
     "tsup": "^6.6.3",
@@ -39,6 +40,7 @@
     "mysql2": "^3.2.0",
     "redis": "^4.6.5",
     "reflect-metadata": "^0.1.13",
-    "sha1": "^1.1.1"
+    "sha1": "^1.1.1",
+    "uuid": "^9.0.0"
   }
 }

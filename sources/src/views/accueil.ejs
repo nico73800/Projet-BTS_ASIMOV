@@ -19,27 +19,6 @@
         </h1>
 
         <section class="section">
-          <% if (typeof matiere=='undefined' || matiere.length==0) { %>
-            <h2 class="subtitle">Aucune matière </h2>            
-          <% } else {%>
-              <article>
-                <h2 class="subtitle">Mes Matières : </h2>
-                <% matiere.forEach(element=> { %>
-                  <p> - <%= element['libelle'] %> </p>
-                <% }) %>
-            <% } %>
-            </article>
-            <br>
-            <article>
-              <% if (typeof classe=='undefined' ) { %>
-                <p> Aucune classe </p>
-              <% } else { %>
-                <h2 class="subtitle"> Mes classes : </h2>
-                <% classe.forEach(element=> { %>
-                  <p> - <%= element['libelleSection'] %> </p>
-                <% }) %>
-              <% } %>
-            </article>
             <article> Sect3 </article>
             <article> Sect4 </article>
             <article> Sect5 </article>

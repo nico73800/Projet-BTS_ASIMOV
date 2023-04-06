@@ -7,7 +7,10 @@ import { Matiere } from '../../../types/class_matiere';
 import { Request, Response } from 'express';
 import * as express from 'express';
 
-export function findProf(id: number, pwd: string, req: Request, res: Response) {
+export function findProf(req: Request, res: Response) {
+    let id = req.body.usr_id;
+    let pwd = req.body.pwd;
+
     try {
         let session = req.session;
         if ((id == 0 || pwd == '') || (id == undefined || pwd == undefined)) {
@@ -45,17 +48,14 @@ export function getMatiereProf(idProf:number, req: Request, res: Response) {
     bdd.module_connexion.query(
         "SELECT m.idMatiere, libelle FROM Matiere m, Prof_Matiere pm WHERE pm.idMatiere = m.idMatiere AND pm.idProfesseur = ?", 
         [idProf], (err, result, fields) => {
-            session = req.session;
+            // session = req.session;
             if (err) {
-                session.error = err.message.toString();
+                res.render('matieres', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], error: "Une erreur est survenue :" + err.message});
             } else {
                 if (result.toString() == '') {
-                    session.error = "Pas de données";
-                    console.log(session);
-                    
+                    res.render('matieres', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], matiere: "Aucune matière"});
                 } else {
-                    session.matiereProf = result;
-                    console.log(session);
+                    res.render('matieres', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], matiere: result});
                 }
 
             }
