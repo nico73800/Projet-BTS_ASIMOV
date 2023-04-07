@@ -14,9 +14,8 @@
 
     <div class="box">
       <h1 class="title"> Accueil d'AsiNote </h1>
-      <% if (typeof user !=='undefined' ) { %>
-        <h1 class="title"> Authentifié en tant que : <%= user %>
-        </h1>
+      <% if (typeof user[0] !=='undefined' ) { %>
+        <h1 class="title"> Authentifié en tant que : <%= user[0]['nomProfesseur'] %> <%= user[0]['prenomProfesseur'] %>  </h1>
 
         <section class="section">
             <article> Sect3 </article>

@@ -5,54 +5,48 @@
 
 import { Request, Response, NextFunction } from 'express';
 import * as profService from "./prof.service";
-import sessions, { Session } from 'express-session';
 import * as express from 'express';
 
+// Fonction de déconnexion : au cas où sinon elle est pas là
 export function logout(req: Request, res: Response) {
-    let session = req.session;
-    session.destroy(function (err) {
+    // let session = req.session;
+    req.session.destroy(function (err) {
         if (err) {
             console.log("Problème avec la session");
             
-        } else {
-            console.log("session Détruite !");
-            express.request.session = req.session;
-            res.redirect('/');
-    
         }
+        express.request.session = req.session;
+        console.log(req.session);
+        
+        res.redirect('/');
     });
 }
 
+// Fonction accueil 
 export function accueil(req: Request, res: Response) {
     let session = req.session;
 
     profService.findProf(req, res);
-
-    console.log("----------------");
-    console.log(session.userid);
-
-
-    if (typeof session.userid === 'undefined') {
-        req.session.error = "Identifiant utilisateur inexistant !"
-        res.redirect('/');
-    } else {
-        res.render('accueil', { user: req.session.userid[0]['nomProfesseur'] + " " + req.session['userid'][0]['prenomProfesseur']});
-    }
 }
 
-
+// Fonction accueil (utilisateur déjà authentifié)
 export function accueil_noauth(req: Request, res: Response) {
     if (typeof req.session.userid === 'undefined') {
         req.session.error = "Identifiant utilisateur inexistant !"
         res.redirect('/');
     } else {
-        res.render('accueil', { user: req.session.userid[0]['nomProfesseur'] + " " + req.session['userid'][0]['prenomProfesseur']});
+        res.render('accueil', { user: req.session.userid});
     }
 
 }
 
+// Fonction pour récupérer les matières
 export function matiere(req: Request, res: Response) {
-    // let session = req.session.userid;
-    // res.send(req.session.userid[0]);
-    profService.getMatiereProf(req.session.userid[0]['idProfesseur'], req, res);   
+    if (typeof req.session.userid == 'undefined') {
+        res.redirect('/');
+    } else {
+        console.log(req.session);
+        
+        profService.getMatiereProf(req.session.userid[0]['idProfesseur'], req, res);   
+    }
 }
