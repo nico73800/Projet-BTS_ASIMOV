@@ -16,6 +16,8 @@ let urlencodedParser = bodyParser.urlencoded({ extended: true })
 router_prof.post('/accueil', urlencodedParser, (req: Request, res: Response) => {
     // req.session = express.request.session;
     // express.request.session = req.session;
+    console.log(req.session);
+    
     ctrl_prof.accueil(req,res);
 });
 

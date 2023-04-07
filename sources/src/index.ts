@@ -69,12 +69,11 @@ app.use(session({
     genid: sess_id,
     cookie: {
         // secure: false,
-        maxAge: 30 * 60 * 1000 * 10000,
+        maxAge: 6000,
         httpOnly: false
     },
     resave: false,
 }));
-
 
 // Redeclaration du module session d'express
 // Module personnalisé pour les sessions
