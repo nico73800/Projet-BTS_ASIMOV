@@ -45,8 +45,7 @@ export function matiere(req: Request, res: Response) {
     if (typeof req.session.userid == 'undefined') {
         res.redirect('/');
     } else {
-        console.log(req.session);
-        
+        // console.log(req.session);
         profService.getMatiereProf(req.session.userid[0]['idProfesseur'], req, res);   
     }
 }
