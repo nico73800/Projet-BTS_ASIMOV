@@ -1,6 +1,8 @@
 /**
- * Fichier des données de la table professeur 
+ * Fichier modèle pour la partie prof   
+ * Auteur : Nicolas CHALOYARD
  */
+
 import { Professeur } from '../../../types/classe_prof';
 import * as bdd from '../../connexion_bdd';
 import { Matiere } from '../../../types/class_matiere';

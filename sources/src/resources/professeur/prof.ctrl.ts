@@ -1,6 +1,6 @@
 /**
- * Controleur Prof 
- * Auteur : NChaloyard
+ * Controleur de la partie professeur 
+ * Auteur : Nicolas Chaloyard
  */
 
 import { Request, Response, NextFunction } from 'express';

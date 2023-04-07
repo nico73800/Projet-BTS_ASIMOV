@@ -1,5 +1,5 @@
 /**
- * Fichier main en typescript
+ * Fichier principal de l'application
  * Auteur : Nicolas CHALOYARD
  */
 

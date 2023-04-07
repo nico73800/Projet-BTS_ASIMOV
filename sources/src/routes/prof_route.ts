@@ -1,3 +1,8 @@
+/**
+ * Fichier des routes de la partie professeur 
+ * Auteur : Nicolas CHALOYARD
+ */
+
 import { Request, Response } from "express";
 import * as ctrl_prof from "../resources/professeur/prof.ctrl";
 import * as express from 'express';
