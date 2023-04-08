@@ -69,7 +69,7 @@ app.use(session({
     genid: sess_id,
     cookie: {
         // secure: false,
-        maxAge: 6000,
+        maxAge: Date.now() + 6000,
         httpOnly: false
     },
     resave: false,
@@ -137,7 +137,7 @@ app.all('*', UnknownRoutesHandler);
 // Doit être le dernier use
 app.use(ExceptionsHandler);
 
-// écoute du port 3000 sur l'adresse localhost
-app.listen(3000, "127.0.0.1", () => {
+// écoute du port 3000 sur l'adresse spécifiée
+app.listen(3000, "0.0.0.0", () => {
     console.log("Projet fonctionnel");
 });

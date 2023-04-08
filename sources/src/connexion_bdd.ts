@@ -8,7 +8,7 @@ export let module_connexion =
         port:3306,
         user:'root',
         password:'root',
-        database:'asimov'
+        database:'Asimov'
 })
 
 // export const module_connexion = 
