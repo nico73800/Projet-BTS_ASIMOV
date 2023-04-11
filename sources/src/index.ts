@@ -3,7 +3,7 @@
  * Auteur : Nicolas CHALOYARD
  */
 
-import ejs from 'ejs';
+import ejs, { localsName } from 'ejs';
 import express from 'express';
 import bodyParser from 'body-parser';
 import { UnknownRoutesHandler } from './middlewares/unknownRoutes.handler';
@@ -20,6 +20,7 @@ import session from 'express-session';
 
 let app = express();
 
+// Constnate pour générer des UUID (identifiant unique universel)
 const genuuid = require('uuid');
 // const MySQLStore = require('express-mysql-session');
 
@@ -44,7 +45,7 @@ const options = {
     password: 'root',
     database: 'Asimov',
     host: 'localhost',
-    port: 3306
+    port: 3306,
 }
 
 let sess_id = function () {
@@ -54,7 +55,8 @@ let sess_id = function () {
 
 const pool = mysql.createConnection(options);
 
-
+// Création de la table session dans une base de données MySQL
+// Utile pour le stockage d'une session dans un serveur
 const MySQLStores = MySQLStore(expressSession);
 const sessionsStore = new MySQLStores(options);
 
@@ -65,14 +67,15 @@ app.use(session({
     secret: "azertyuiop",
     store: sessionsStore,
     rolling: true,
-    saveUninitialized: false,
+    saveUninitialized: true,
     genid: sess_id,
     cookie: {
-        // secure: false,
-        maxAge: Date.now() + 6000,
+        secure: false,
+        expires: new Date(Date.now() + 86400000),
+        maxAge: 86400000,
         httpOnly: false
     },
-    resave: false,
+    resave: true,
 }));
 
 // Redeclaration du module session d'express
@@ -103,6 +106,7 @@ app.get('/', function (req, res, next) {
 
 // Fonction de déconnexion 
 app.get('/logout', (req:Request, res:Response, next) => {
+    /// On détruit les sessions présentes dans Express
     req.session.destroy((err => {
         if (err) {
             console.log("Problème avec la session : " + err);
@@ -110,15 +114,17 @@ app.get('/logout', (req:Request, res:Response, next) => {
         }        
     }));
 
-    console.log(req.session);
-
+    // On détruit le stockage des sessions dans MySQL
     sessionsStore.clear((err => {
         if (err) {
             console.log("Problème avec la session : " + err);
         }
     }));
 
+    // On nettoie les cookies
     res.clearCookie("AsiNote");
+
+    // Et on redirige vers la page d'accueil
     res.redirect('/');
 
 
