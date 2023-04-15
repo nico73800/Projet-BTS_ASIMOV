@@ -19,6 +19,7 @@ import { Request, Response } from 'express';
 import session from 'express-session';
 
 let app = express();
+let urlencodedParser = bodyParser.urlencoded({ extended: true })
 
 // Constnate pour générer des UUID (identifiant unique universel)
 const genuuid = require('uuid');
@@ -100,8 +101,18 @@ declare module 'express-session' {
 // });
 
 // Accueil
-app.get('/', function (req, res, next) {
-    res.render('connexion');
+app.get('/', (req:Request, res:Response, next) => {
+    res.render('choix_auth');
+});
+
+app.post('/auth', urlencodedParser, (req:Request, res:Response, next) => {
+    if (req.body.type == "prof") {
+        res.redirect('/prof/auth_prof');
+    } else if (req.body.type == "eleve") {
+        res.redirect('/');
+    } else {
+        res.redirect('/');
+    }
 });
 
 // Fonction de déconnexion 

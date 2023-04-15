@@ -7,6 +7,12 @@ import { Request, Response, NextFunction } from 'express';
 import * as profService from "./prof.service";
 import * as express from 'express';
 
+// Fonction de génération de la page d'authentification 
+export function connexion_page(req: Request, res: Response) {
+    res.render('connexion_prof');
+}
+
+
 // Fonction de déconnexion : au cas où sinon elle est pas là
 export function logout(req: Request, res: Response) {
     // let session = req.session;

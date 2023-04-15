@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/public/css/bulma/css/bulma.css">
+    <link rel="stylesheet" href="/public/css/bulma/css/bulma.min.css">
+    <title>Accueil</title>
+</head>
+<body>
+    <div class="box">
+        <h1 class="title"> Choix de la position dans l'établissement </h1>
+
+        <form action="/auth" method="post" enctype="application/x-www-form-urlencoded">
+
+            <div class="field">
+                <label class="label" for="type"> Sélectionnez votre position dans l'établissement : </label>
+                <div class="control">
+                    <select class="select" name="type" id="type">
+                        <option selected value=""> Selectionnez une valeur </option>
+                        <option value="prof"> Enseignant </option>
+                        <option value="eleve"> Elève </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="field is-grouped">
+                <div class="control">
+                    <button class="button is-link">Se connecter</button>
+                </div>
+                <!-- <div class="control">
+                    <button class="button is-text" type="reset"></button>
+                </div> -->
+            </div>
+        </form>
+    </div>
+
+    <script src="/public/js/js_handler.js"></script>
+    <script src="/public/js/js_handler_menu.js"></script>
+</body>
+</html>

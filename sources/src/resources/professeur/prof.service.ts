@@ -19,17 +19,17 @@ export function findProf(req: Request, res: Response) {
     try {
         // On test les valeurs récupérées du body en post
         if ((id == 0 || pwd == '') || (id == undefined || pwd == undefined)) {
-            res.render('connexion', {message:"Identifiant / mot de passe vide invalide "});
+            res.render('connexion_prof', {message:"Identifiant / mot de passe vide invalide "});
         } else {
             /// La requête SQL
             bdd.module_connexion.query("SELECT idProfesseur, nomProfesseur, prenomProfesseur FROM Professeur WHERE idProfesseur = ? AND password = SHA1(?)", [id, pwd] ,(err, result, fields) => {
                 // Test des erreurs 
                 if (err) {
-                    res.render('connexion', {message:"Erreur : " + err.message});
+                    res.render('connexion_prof', {message:"Erreur : " + err.message});
                 } else {
                     // Test en cas de vide du résultat 
                     if (result.toString() == '') {
-                        res.render('connexion', {message:"Authentification incorrecte"});
+                        res.render('connexion_prof', {message:"Authentification incorrecte"});
                     } else {
                         req.session.userid = result;
                         res.render('accueil', {user:result});

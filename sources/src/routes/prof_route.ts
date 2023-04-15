@@ -12,6 +12,9 @@ export const router_prof = express.Router();
 const bodyParser = require("body-parser");
 let urlencodedParser = bodyParser.urlencoded({ extended: true })
 
+// Routage vers l'authentification des enseignants 
+router_prof.get('/auth_prof', ctrl_prof.connexion_page);
+
 // Routage vers l'accueil : en passant par un formulaire d'authentification 
 router_prof.post('/accueil', urlencodedParser, (req: Request, res: Response) => {
     console.log(req.session)
