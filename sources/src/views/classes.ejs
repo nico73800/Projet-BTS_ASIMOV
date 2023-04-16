@@ -19,13 +19,13 @@
         </h1>
 
         <section class="section">
-          <% if (typeof matiere=='undefined' || matiere.length==0) { %>
-            <h2 class="subtitle">Aucune matière </h2>            
+          <% if (typeof classe=='undefined' || classe.length==0) { %>
+            <h2 class="subtitle"> Aucune classe </h2>            
           <% } else {%>
               <article>
-                <h2 class="subtitle">Mes Matières : </h2>
-                <% matiere.forEach(element=> { %>
-                  <p> - <%= element['libelle'] %> </p>
+                <h2 class="subtitle"> Mes classes : </h2>
+                <% classe.forEach(element=> { %>
+                  <p> - <%= element['libelleSection'] %> </p>
                 <% }) %>
             <% } %>
             </article>

@@ -71,14 +71,14 @@ export function getClasseProf(idProf: number, req: Request, res: Response) {
         "SELECT idSection, libelleSection FROM Section WHERE idProfesseur = ?", 
         [idProf], (err, result, fields) => {
             if (err) {
-
-                // session['error'] = err.message.toString();
+                res.render('classes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], error: "Une erreur est survenue :" + err.message});
             } else {
-                // session.error == null;
-                // session['classeProf'] = result;
-                
-                // res.redirect('/prof/accueil');
-            }
+              // Test en cas de vide du résultat 
+              if (result.toString() == '') {
+                res.render('classes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], classe: "Aucune matière"});
+            } else {
+                res.render('classes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], classe: result});
+            }            }
             // session.save();
         });
 }

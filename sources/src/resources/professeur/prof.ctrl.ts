@@ -55,3 +55,13 @@ export function matiere(req: Request, res: Response) {
         profService.getMatiereProf(req.session.userid[0]['idProfesseur'], req, res);   
     }
 }
+
+// Fonction pour récupérer les matières
+export function classe(req: Request, res: Response) {
+    if (typeof req.session.userid == 'undefined') {
+        res.redirect('/');
+    } else {
+        // console.log(req.session);
+        profService.getClasseProf(req.session.userid[0]['idProfesseur'], req, res);   
+    }
+}
