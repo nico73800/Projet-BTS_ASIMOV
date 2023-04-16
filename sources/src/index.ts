@@ -105,6 +105,7 @@ app.get('/', (req:Request, res:Response, next) => {
     res.render('choix_auth');
 });
 
+// Routage vers l'authentification pour le rôle de l'utilisateur demandé (élève ou prof)
 app.post('/auth', urlencodedParser, (req:Request, res:Response, next) => {
     if (req.body.type == "prof") {
         res.redirect('/prof/auth_prof');

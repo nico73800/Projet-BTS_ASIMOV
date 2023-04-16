@@ -13,9 +13,8 @@ export function connexion_page(req: Request, res: Response) {
 }
 
 
-// Fonction de déconnexion : au cas où sinon elle est pas là
+// Fonction de déconnexion : inutilisée à l'heure actuelle
 export function logout(req: Request, res: Response) {
-    // let session = req.session;
     req.session.destroy(function (err) {
         if (err) {
             console.log("Problème avec la session");
@@ -48,20 +47,23 @@ export function accueil_noauth(req: Request, res: Response) {
 
 // Fonction pour récupérer les matières
 export function matiere(req: Request, res: Response) {
+    // On test si l'id utilisateur est non défini
     if (typeof req.session.userid == 'undefined') {
         res.redirect('/');
+    // Si non : alors on redirige vers la page demandée
     } else {
         // console.log(req.session);
         profService.getMatiereProf(req.session.userid[0]['idProfesseur'], req, res);   
     }
 }
 
-// Fonction pour récupérer les matières
+// Fonction pour récupérer les classes
 export function classe(req: Request, res: Response) {
+    // On test si l'id utilisateur est non défini
     if (typeof req.session.userid == 'undefined') {
         res.redirect('/');
+    // Si non : alors on redirige vers la page demandée
     } else {
-        // console.log(req.session);
         profService.getClasseProf(req.session.userid[0]['idProfesseur'], req, res);   
     }
 }

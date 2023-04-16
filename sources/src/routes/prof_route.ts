@@ -22,12 +22,15 @@ router_prof.post('/accueil', urlencodedParser, (req: Request, res: Response) => 
 });
 
 // Routage vers l'accueil : san passer par un formulaire d'authentification
+// Nécessite d'avoir déjà été authentifié 
 router_prof.get('/accueil', ctrl_prof.accueil_noauth);
 
+// Routage vers la page des matières d'un enseignant 
 router_prof.get('/matieres', (req: Request, res: Response) => {
     ctrl_prof.matiere(req, res);
 });
 
+// Routage vers la page classe d'un enseignant 
 router_prof.get('/classes', (req: Request, res: Response) => {
     ctrl_prof.classe(req, res);
 });
