@@ -22,3 +22,5 @@ Notes techniques :
 
 ## V2 : Accès Professeur / CRUD notes (non implémentée)
 - Permettre la lecture, écriture, suppresion des notes
+- Correction de l'implémentation de l'authentification des enseignants :
+    - Utilisation d'un couple {Login + Password} à la place du couple {ID + Password}
