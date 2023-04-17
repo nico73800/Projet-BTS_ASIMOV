@@ -20,7 +20,14 @@ Notes techniques :
 - Correction de l'affichage au niveau de la page d'accueil : 
     * Un élément censé être récupérer par Express n'existait plus et empêchait le chargement de la page
 
-## V2 : Accès Professeur / CRUD notes (non implémentée)
-- Permettre la lecture, écriture, suppresion des notes
+## V2 : Accès Professeur / CRUD notes (En cours d'implémentation)
+### Fonctionnalités implémentées 
+- Lecture des notes 
+
+### En cours d'implémentation 
+- Ajout d'une note pour un élève
+
+### A implémenter 
+- suppresion et modification des notes
 - Correction de l'implémentation de l'authentification des enseignants :
     - Utilisation d'un couple {Login + Password} à la place du couple {ID + Password}
