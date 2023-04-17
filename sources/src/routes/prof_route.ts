@@ -34,3 +34,7 @@ router_prof.get('/matieres', (req: Request, res: Response) => {
 router_prof.get('/classes', (req: Request, res: Response) => {
     ctrl_prof.classe(req, res);
 });
+
+router_prof.get('/notes/:id', (req: Request, res: Response) => {
+    ctrl_prof.noteParSection(req, res);
+});

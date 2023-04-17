@@ -66,7 +66,6 @@ export function getMatiereProf(idProf:number, req: Request, res: Response) {
 // Fonction modèle de récupération des données de la classe d'un prof dans la BDD 
 // Pas utilisée encore (à faire V2)
 export function getClasseProf(idProf: number, req: Request, res: Response) {
-    let session = req.session;
     bdd.module_connexion.query(
         "SELECT idSection, libelleSection FROM Section WHERE idProfesseur = ?", 
         [idProf], (err, result, fields) => {
@@ -74,11 +73,39 @@ export function getClasseProf(idProf: number, req: Request, res: Response) {
                 res.render('classes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], error: "Une erreur est survenue :" + err.message});
             } else {
               // Test en cas de vide du résultat 
-              if (result.toString() == '') {
-                res.render('classes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], classe: "Aucune matière"});
-            } else {
-                res.render('classes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], classe: result});
-            }            }
-            // session.save();
+                if (result.toString() == '') {
+                   res.render('classes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], classe: "Aucune matière"});
+                } else {
+                    res.render('classes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], classe: result});
+                }
+            }
         });
+}
+
+export function getNoteClasse(req: Request, res: Response) {
+    let id = req.params.id;
+    if (id == '' || id == undefined) {
+        res.send("Problèmes");
+    } else {
+        bdd.module_connexion.query(
+            "SELECT nomEleve, prenomEleve, libelleSection, note FROM notes n, eleve e, section s  WHERE n.idEleve = e.idEleve AND e.idSection = s.idSection, s.idSection = ?",
+            [id], (err, result, fields) => {
+                if (typeof(result) == 'undefined') {
+                    bdd.module_connexion.query(
+                        "SELECT libelleSection FROM section WHERE idSection = ?",
+                        [id], (err, result, fields) => {
+                            if (err) {
+                                res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], error: "Une erreur est survenue" + err.message});   
+                            } else {
+                                console.log(result);
+                                res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], section: result});
+                            }
+                        });
+                } else if (err) {
+                    res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], error: "Une erreur est survenue" + err.message});
+                } else {
+                    res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], note: result});   
+                }
+            });
+    }
 }

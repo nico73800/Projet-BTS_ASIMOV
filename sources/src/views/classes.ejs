@@ -25,14 +25,11 @@
               <article>
                 <h2 class="subtitle"> Mes classes : </h2>
                 <% classe.forEach(element=> { %>
-                  <p> - <%= element['libelleSection'] %> </p>
+                  <p> - <a name="idClasse" id="idClasse" href="/prof/notes/<%= element['idSection'] %>"> <%= element['libelleSection'] %> </a> </p>
                 <% }) %>
             <% } %>
             </article>
             <br>
-            <article> Sect3 </article>
-            <article> Sect4 </article>
-            <article> Sect5 </article>
       </section>
       <% } else { %>
         <h1 class="title"> Problème avec les idenfitifiants </h1>

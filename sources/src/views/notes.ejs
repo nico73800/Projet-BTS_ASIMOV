@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/css/bulma/css/bulma.css">
+    <title>Matieres</title>
+</head>
+
+<body>
+    <%- include('menu.ejs') %>
+
+    <div class="box">
+        <h1 class="title"> Mes matières </h1>
+
+        <% if (typeof error !== 'undefined')  {%>
+            <p> <% error %> </p>
+        <% } %>
+
+        <% if (typeof user !=='undefined' ) { %>
+            <h1 class="title"> Authentifié en tant que : <%= user %> </h1>
+
+            <section class="section">
+                <% if (typeof note=='undefined' || note.length==0) { %>
+                    <h2 class="subtitle">Aucune note pour la section : <%= section[0]['libelleSection'] %></h2>
+                <% } else { %>
+                    <article>
+                        <h2 class="subtitle"> Les notes de la section : <%= note[0]['libelleSection'] %> </h2>
+                        <% note.forEach(element=> { %>
+                            <p> - <%= element[0]['nomEleve'], element[0]['prenomEleve'], element[0]['note'] %>
+                            </p>
+                        <% }) %>
+                <% } %>
+                    </article>
+                    <br>
+            </section>
+        <% } else { %>
+            <h1 class="title"> Problème avec les idenfitifiants </h1>
+            <h2 class="subtitle"> Aucun accès autorisé </h2>
+        <% } %>
+    </div>
+
+
+    
+</body>
+
+</html>

@@ -67,3 +67,14 @@ export function classe(req: Request, res: Response) {
         profService.getClasseProf(req.session.userid[0]['idProfesseur'], req, res);   
     }
 }
+
+// Fonction pour récupérer les notes d'une section
+export function noteParSection(req: Request, res: Response) {
+    // On test si l'id utilisateur est non défini
+    if (typeof req.session.userid == 'undefined') {
+        res.redirect('/');
+    // Si non : alors on redirige vers la page demandée
+    } else {
+        profService.getNoteClasse(req, res);   
+    }
+}
