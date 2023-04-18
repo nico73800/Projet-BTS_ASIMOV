@@ -20,16 +20,19 @@ export function findProf(req: Request, res: Response) {
         // On test les valeurs récupérées du body en post
         if ((id == 0 || pwd == '') || (id == undefined || pwd == undefined)) {
             res.render('connexion_prof', {message:"Identifiant / mot de passe vide invalide "});
+        
         } else {
             /// La requête SQL
             bdd.module_connexion.query("SELECT idProfesseur, nomProfesseur, prenomProfesseur FROM Professeur WHERE idProfesseur = ? AND password = SHA1(?)", [id, pwd] ,(err, result, fields) => {
                 // Test des erreurs 
                 if (err) {
                     res.render('connexion_prof', {message:"Erreur : " + err.message});
+                
                 } else {
                     // Test en cas de vide du résultat 
                     if (result.toString() == '') {
                         res.render('connexion_prof', {message:"Authentification incorrecte"});
+                    
                     } else {
                         req.session.userid = result;
                         res.render('accueil', {user:result});
@@ -37,6 +40,7 @@ export function findProf(req: Request, res: Response) {
                 }
             });
         }
+    
     } catch (error) {
         res.send("Service en  maintenance !");
         console.log(error);
@@ -71,10 +75,12 @@ export function getClasseProf(idProf: number, req: Request, res: Response) {
         [idProf], (err, result, fields) => {
             if (err) {
                 res.render('classes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], error: "Une erreur est survenue :" + err.message});
+            
             } else {
               // Test en cas de vide du résultat 
                 if (result.toString() == '') {
                    res.render('classes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], classe: "Aucune matière"});
+
                 } else {
                     res.render('classes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], classe: result});
                 }
@@ -86,6 +92,7 @@ export function getNoteClasse(req: Request, res: Response) {
     let id = req.params.id;
     if (id == '' || id == undefined) {
         res.send("Problèmes");
+    
     } else {
         bdd.module_connexion.query(
             "SELECT nomEleve, prenomEleve, libelleSection, note FROM notes n, eleve e, section s  WHERE n.idEleve = e.idEleve AND e.idSection = s.idSection, s.idSection = ?",
@@ -97,12 +104,13 @@ export function getNoteClasse(req: Request, res: Response) {
                             if (err) {
                                 res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], error: "Une erreur est survenue" + err.message});   
                             } else {
-                                console.log(result);
                                 res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], section: result});
                             }
                         });
+
                 } else if (err) {
                     res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], error: "Une erreur est survenue" + err.message});
+
                 } else {
                     res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], note: result});   
                 }
