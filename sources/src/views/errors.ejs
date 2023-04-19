@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/public/css/bulma/css/bulma.css">
+    <link rel="stylesheet" href="/public/css/bulma/css/bulma.min.css">
+    <title>Accueil</title>
+</head>
+<body>
+    <div class="box">
+        <h1 class="title"> Erreur </h1>
+        <% if (typeof error !== 'undefined') { %>
+            <article class="notification is-danger">
+                <button class="delete"></button>
+                <p><%= error %></p>
+            </article>
+        <% } %>
+
+        <form action="/logout" method="get">
+            <div class="field">
+                <div class="control">
+                    <button class="button is-link">Retour à l'accueil</button>
+                </div>
+            </div>
+        </form>
+</body>
+</html>
