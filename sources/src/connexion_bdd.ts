@@ -1,6 +1,4 @@
 import * as mysql from "mysql2"; 
-import * as iniparser from "iniparser";
-
 
 export let module_connexion =
 	mysql.createConnection({

@@ -3,11 +3,8 @@
  * Auteur : Nicolas CHALOYARD
  */
 
-import { Professeur } from '../../../types/classe_prof';
 import * as bdd from '../../connexion_bdd';
-import { Matiere } from '../../../types/class_matiere';
 import { Request, Response } from 'express';
-import * as express from 'express';
 
 // Fonction de récupération du prof 
 // Après authentification

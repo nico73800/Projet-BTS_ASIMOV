@@ -3,13 +3,12 @@
  * Auteur : Nicolas CHALOYARD
  */
 
-import ejs, { localsName } from 'ejs';
+import ejs from 'ejs';
 import express from 'express';
 import bodyParser from 'body-parser';
 import { UnknownRoutesHandler } from './middlewares/unknownRoutes.handler';
 import path from 'path';
 import { router_prof } from './routes/prof_route';
-import cookieParser from 'cookie-parser';
 import { ExceptionsHandler } from './middlewares/exceptions.handler';
 import * as expressSession from 'express-session';
 import * as mysql from 'mysql2';
@@ -153,7 +152,7 @@ app.all('*', UnknownRoutesHandler);
 
 // Gestion des erreurs 
 // Doit être le dernier use
-// app.use(ExceptionsHandler);
+app.use(ExceptionsHandler);
 
 // écoute du port 3000 sur l'adresse spécifiée
 app.listen(3000, "0.0.0.0", () => {
