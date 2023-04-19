@@ -11,22 +11,19 @@
 <body>
     <div class="box">
         <h1 class="title"> Authentification </h1>
-        <%# with (Session || {}) {  %>
-            <% if (typeof message !== 'undefined') { %>
-                <article class="notification is-danger">
-                    <button class="delete"></button>
-                    <p><%= message %></p>
-                </article>
-            <% } %>
-            <% if (typeof error !== 'undefined') { %>
-                <article class="notification is-danger">
-                    <button class="delete"></button>
-                    <p><%= error %></p>
-                </article>
-            <% } %>
-        <%# } %>
+        <% if (typeof message !== 'undefined') { %>
+            <article class="notification is-danger">
+                <button class="delete"></button>
+                <p><%= message %></p>
+            </article>
+        <% } %>
+        <% if (typeof error !== 'undefined') { %>
+            <article class="notification is-danger">
+                <button class="delete"></button>
+                <p><%= error %></p>
+            </article>
+        <% } %>
         <form action="/prof/accueil" method="post" enctype="application/x-www-form-urlencoded">
-        <!-- <form action="/prof/accueil" method="get"> -->
             <div class="field">
                 <label class="label" for="usr_id"> Login / Identifiant unique </label>
                 <input class="input is-success" type="text" id="usr_id" name="usr_id">
@@ -43,22 +40,16 @@
                 <div class="control">
                     <button class="button is-link">Se connecter</button>
                 </div>
-                <!-- <div class="control">
-                    <button class="button is-text" type="reset"></button>
-                </div> -->
             </div>
         </form>
         <br>
         <form action="/logout" method="get">
-                <div class="field">
-                    <div class="control">
-                        <button class="button is-link">Quitter</button>
-                    </div>
-                    <!-- <div class="control">
-                        <button class="button is-text" type="reset"></button>
-                    </div> -->
+            <div class="field">
+                <div class="control">
+                    <button class="button is-link">Quitter</button>
                 </div>
-            </form>
+            </div>
+        </form>
     </div>
 
     <script src="/public/js/js_handler.js"></script>
