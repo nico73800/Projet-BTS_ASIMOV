@@ -18,6 +18,26 @@
             </article>
         <% } %>
 
+        <% if (typeof userid !== 'undefined' && typeof typeAuth !== 'undefined') { %>
+            <% if (typeAuth == "prof") { %> 
+                <form action="/prof/accueil" method="get">
+                    <div class="field">
+                        <div class="control">
+                            <button class="button is-link">Retour à l'accueil</button>
+                        </div>
+                    </div>
+                </form>
+            <% } else if (typeAuth == "eleve") { %>
+                <form action="/logout" method="get">
+                    <div class="field">
+                        <div class="control">
+                            <button class="button is-link">Retour à l'accueil</button>
+                        </div>
+                    </div>
+                </form>
+            <% } %>
+
+        <% } else { %>
         <form action="/logout" method="get">
             <div class="field">
                 <div class="control">
@@ -25,5 +45,6 @@
                 </div>
             </div>
         </form>
+        <% } %>
 </body>
 </html>

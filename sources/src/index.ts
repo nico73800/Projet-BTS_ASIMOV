@@ -86,6 +86,7 @@ declare module 'express-session' {
         userid: { [key: string]: any },
         message: string;
         error: string;
+        typeSession : string;
         // matiereProf: { [key: string]: any };
         // classeProf: { [key: string]: any };
     }
@@ -107,8 +108,10 @@ app.get('/', (req:Request, res:Response, next) => {
 // Routage vers l'authentification pour le rôle de l'utilisateur demandé (élève ou prof)
 app.post('/auth', urlencodedParser, (req:Request, res:Response, next) => {
     if (req.body.type == "prof") {
+        req.session.typeSession = "prof";
         res.redirect('/prof/auth_prof');
     } else if (req.body.type == "eleve") {
+        req.session.typeSession = "eleve";
         res.redirect('/');
     } else {
         res.redirect('/');
