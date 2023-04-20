@@ -29,7 +29,7 @@
                     <article>
                         <h2 class="subtitle"> Les notes de la section : <%= note[0]['libelleSection'] %> </h2>
                         <% note.forEach(element=> { %>
-                            <p> - <%= element[0]['nomEleve'], element[0]['prenomEleve'], element[0]['note'] %>
+                            <p> - <%= element['nomEleve'] %> <%= element['prenomEleve'] %> - Note : <%= element['note'] %>
                             </p>
                         <% }) %>
                 <% } %>

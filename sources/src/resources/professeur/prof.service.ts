@@ -92,9 +92,10 @@ export function getNoteClasse(req: Request, res: Response) {
     
     } else {
         bdd.module_connexion.query(
-            "SELECT nomEleve, prenomEleve, libelleSection, note FROM notes n, eleve e, section s  WHERE n.idEleve = e.idEleve AND e.idSection = s.idSection, s.idSection = ?",
+            "SELECT nomEleve, prenomEleve, libelleSection, note FROM notes n, eleve e, section s WHERE n.idEleve = e.idEleve AND e.idSection = s.idSection AND s.idSection = ?",
             [id], (err, result, fields) => {
-                if (typeof(result) == 'undefined') {
+                console.log(result);
+                if (typeof(result) == 'undefined') {                    
                     bdd.module_connexion.query(
                         "SELECT libelleSection FROM section WHERE idSection = ?",
                         [id], (err, result, fields) => {
