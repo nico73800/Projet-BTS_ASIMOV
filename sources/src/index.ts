@@ -136,12 +136,12 @@ app.get('/redirect_handler', (req:Request, res:Response, NextFunction) => {
 // Fonction de déconnexion 
 app.get('/logout', (req:Request, res:Response, next) => {
     /// On détruit les sessions présentes dans Express
-    req.session.destroy((err => {
+    req.session.destroy(err => {
         if (err) {
             console.log("Problème avec la session : " + err);
             res.redirect('/');
         }        
-    }));
+    });
 
     // On détruit le stockage des sessions dans MySQL
     sessionsStore.clear((err => {
