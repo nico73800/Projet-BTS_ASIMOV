@@ -37,5 +37,5 @@ export const ExceptionsHandler = (err: any, req: Request, res: Response, next: N
 	 */
 	return res
 		.status(500)
-		.render("errors",{ userid: req.session.userid, typeAuth: req.session.typeSession ,error: 'Erreur interne' })
+		.render("errors",{error: 'Erreur interne' })
 }

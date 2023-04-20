@@ -118,6 +118,7 @@ app.post('/auth', urlencodedParser, (req:Request, res:Response, next) => {
     }
 });
 
+// Routage pour la gestion des erreurs (page inexistante, non autorisé, etc.)
 app.get('/redirect_handler', (req:Request, res:Response, NextFunction) => {
     if (typeof req.session.userid !== 'undefined' && typeof req.session.typeSession !== 'undefined') {
         if (req.session.typeSession == "prof") {
