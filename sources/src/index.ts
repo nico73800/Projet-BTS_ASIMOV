@@ -14,7 +14,7 @@ import * as expressSession from 'express-session';
 import * as mysql from 'mysql2';
 import cors from 'cors';
 import MySQLStore from "express-mysql-session";
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import session from 'express-session';
 
 let app = express();
@@ -117,6 +117,20 @@ app.post('/auth', urlencodedParser, (req:Request, res:Response, next) => {
         res.redirect('/');
     }
 });
+
+app.get('/redirect_handler', (req:Request, res:Response, NextFunction) => {
+    if (typeof req.session.userid !== 'undefined' && typeof req.session.typeSession !== 'undefined') {
+        if (req.session.typeSession == "prof") {
+            res.redirect("/prof/accueil");
+        } else if (req.session.typeSession == "eleve") {
+            res.redirect('/logout');
+        } else {
+            res.redirect('/logout');
+        }
+    } else {
+        res.redirect('/logout');
+    }
+})
 
 // Fonction de déconnexion 
 app.get('/logout', (req:Request, res:Response, next) => {
