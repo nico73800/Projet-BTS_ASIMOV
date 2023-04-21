@@ -16,7 +16,7 @@
         <h1 class="title"> Les notes </h1>
 
         <% if (typeof error !== 'undefined')  {%>
-            <p> <% error %> </p>
+            <p> <%= error %> </p>
         <% } %>
 
         <% if (typeof user !=='undefined' ) { %>
@@ -28,10 +28,39 @@
                 <% } else { %>
                     <article>
                         <h2 class="subtitle"> Les notes de la section : <%= note[0]['libelleSection'] %> </h2>
-                        <% note.forEach(element=> { %>
-                            <p> - <%= element['nomEleve'] %> <%= element['prenomEleve'] %> - Note : <%= element['note'] %>
-                            </p>
-                        <% }) %>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th><abbr title="Nombre de plus de 50% de réussite">Nombre d'élève avec plus de 50% de réussite</abbr></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <% let sum = 0 %>
+                                    <% note.forEach(element => { if(Number(element['note']) > 50) { sum++ }} ) %>
+                                    <td> <%= sum %> </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th><abbr title="Nom">Nom élève </abbr></th>
+                                    <th><abbr title="Prénom">Prénom élève</abbr></th>
+                                    <th><abbr title="Note">Note</abbr></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <% note.forEach(element => { %>
+                                <tr>
+                                    <td> <%= element['nomEleve'] %> </td>
+                                    <td> <%= element['prenomEleve'] %> </td>
+                                    <td> <%= element['note'] %> </td>
+                                </tr>
+                            <% }) %>
+                            </tbody>
+
+
                 <% } %>
                     </article>
                     <br>
