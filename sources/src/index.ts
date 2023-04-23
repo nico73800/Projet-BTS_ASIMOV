@@ -121,9 +121,10 @@ app.post('/auth', urlencodedParser, (req:Request, res:Response, next) => {
 
 // Routage pour la gestion des erreurs (page inexistante, non autorisé, etc.)
 app.get('/redirect_handler', (req:Request, res:Response, NextFunction) => {
+    console.log(req.session);
     if (typeof req.session.userid !== 'undefined' && typeof req.session.typeSession !== 'undefined') {
         console.log(req.session);
-        if (req.session.typeSession == "prof") {
+        if (req.session.typeSession === "prof") {
             res.redirect("/prof/accueil");
         } else if (req.session.typeSession == "eleve") {
             res.redirect('/logout');

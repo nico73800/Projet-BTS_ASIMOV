@@ -89,14 +89,11 @@ export function getClasseProf(idProf: number, req: Request, res: Response) {
 export function getNoteClasse(req: Request, res: Response) {
     let id = req.params.id;
     if (id == '' || id == undefined || id == '0') {
-        res.status(500);
-    
+        res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], error: "Saisie invalide"});
     } else {
         bdd.module_connexion.query(
             "SELECT nomEleve, prenomEleve, libelleSection, note FROM Notes n, Eleve e, Section s WHERE n.idEleve = e.idEleve AND e.idSection = s.idSection AND s.idSection = ?",
             [id], (err, result, fields) => {
-                console.log("1");
-                console.log(Object(result));
                 if (typeof(result) == 'undefined' || Object(result) == '') {                    
                     bdd.module_connexion.query(
                         "SELECT libelleSection FROM Section WHERE idSection = ?",
