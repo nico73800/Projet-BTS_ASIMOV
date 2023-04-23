@@ -52,7 +52,7 @@ CREATE TABLE Eleve(
 
 CREATE TABLE Notes(
    idNotes INT auto_increment,
-   note DECIMAL(3,2) NOT NULL CHECK (note <= 100.00 AND note >= 0.00),
+   note DECIMAL(5,2) NOT NULL CHECK (note <= 100.00 AND note >= 0.00),
    idProfesseur INT NOT NULL,
    idMatiere INT NOT NULL,
    idEleve INT NOT NULL,
@@ -99,3 +99,7 @@ INSERT INTO Matiere (idMatiere, libelle) VALUES (NULL, "Mathématiques");
 INSERT INTO Prof_Matiere VALUES(1, 3);
 
 INSERT INTO Prof_Matiere VALUES (2, 1);
+
+INSERT INTO Notes VALUES (NULL, 10.0, 2, 3, 1);
+
+INSERT INTO Notes VALUES (NULL, 20.0, 2, 3, 2);
