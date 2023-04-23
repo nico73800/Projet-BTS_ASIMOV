@@ -12,8 +12,8 @@ Pour lancer le projet il faut taper :
 - Ajout de l'authentification
 - Modification de la page d'accueil (corrections bugs)
 
-Notes techniques :
-- Ajout et correction des bugs au niveau des sessions qui ne fonctionnaient pas :
+### Notes techniques :
+- Corrections des bugs au niveau des sessions qui ne fonctionnaient pas :
     * Redéclaration du module Session d'**Express-session** (dans [index.ts](https://github.com/nico73800/Projet-BTS_ASIMOV/blob/main/sources/src/index.ts))
 - Modification des signatures des fonctions : 
     * Ajout des types Request et Response d'Express
@@ -31,3 +31,9 @@ Notes techniques :
 - suppresion et modification des notes
 - Correction de l'implémentation de l'authentification des enseignants :
     - Utilisation d'un couple {Login + Password} à la place du couple {ID + Password}
+
+### Notes techniques : 
+- Corrections de bugs dans [prof.service.ts](https://github.com/nico73800/Projet-BTS_ASIMOV/blob/main/sources/src/resources/professeur/prof.service.ts) :
+    * Correction du test de la nullité d'un résultat d'une requête SQL (changement par Object(result) == '') 
+    * 
+- 
