@@ -75,6 +75,8 @@ export function noteParSection(req: Request, res: Response) {
         res.redirect('/');
     // Si non : alors on redirige vers la page demandée
     } else {
+        console.log(req.session);
+        
         profService.getNoteClasse(req, res);   
     }
 }

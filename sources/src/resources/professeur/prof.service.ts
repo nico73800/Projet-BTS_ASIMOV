@@ -54,8 +54,8 @@ export function getMatiereProf(idProf:number, req: Request, res: Response) {
                 res.render('matieres', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], error: "Une erreur est survenue :" + err.message});
             } else {
                 // Test en cas de vide du résultat 
-                if (result.toString() == '') {
-                    res.render('matieres', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], matiere: "Aucune matière"});
+                if (typeof(result) == 'undefined' || Object(result) == '') {
+                    res.render('matieres', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur']});
                 } else {
                     res.render('matieres', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], matiere: result});
                 }
@@ -74,9 +74,10 @@ export function getClasseProf(idProf: number, req: Request, res: Response) {
                 res.render('classes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], error: "Une erreur est survenue :" + err.message});
             
             } else {
+                console.log(Object(result));
               // Test en cas de vide du résultat 
-                if (result.toString() == '') {
-                   res.render('classes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], classe: "Aucune matière"});
+                if (typeof(result) == 'undefined' || Object(result) == '') {
+                   res.render('classes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur']});
 
                 } else {
                     res.render('classes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], classe: result});
@@ -87,22 +88,27 @@ export function getClasseProf(idProf: number, req: Request, res: Response) {
 
 export function getNoteClasse(req: Request, res: Response) {
     let id = req.params.id;
-    if (id == '' || id == undefined) {
-        res.send("Problèmes");
+    if (id == '' || id == undefined || id == '0') {
+        res.status(500);
     
     } else {
         bdd.module_connexion.query(
-            "SELECT nomEleve, prenomEleve, libelleSection, note FROM notes n, eleve e, section s WHERE n.idEleve = e.idEleve AND e.idSection = s.idSection AND s.idSection = ?",
+            "SELECT nomEleve, prenomEleve, libelleSection, note FROM Notes n, Eleve e, Section s WHERE n.idEleve = e.idEleve AND e.idSection = s.idSection AND s.idSection = ?",
             [id], (err, result, fields) => {
-                console.log(result);
-                if (typeof(result) == 'undefined') {                    
+                console.log("1");
+                console.log(Object(result));
+                if (typeof(result) == 'undefined' || Object(result) == '') {                    
                     bdd.module_connexion.query(
-                        "SELECT libelleSection FROM section WHERE idSection = ?",
-                        [id], (err, result, fields) => {
+                        "SELECT libelleSection FROM Section WHERE idSection = ?",
+                        [id], (err2, result2, fields) => {
                             if (err) {
+                                console.log(err2);
+                                
                                 res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], error: "Une erreur est survenue" + err.message});   
                             } else {
-                                res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], section: result});
+                                console.log(result2);
+
+                                res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], section: result2});
                             }
                         });
 
