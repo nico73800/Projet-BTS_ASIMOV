@@ -6,7 +6,7 @@ L'objectif est de créer une plateforme Web / Client lourd pour la gestion des �
 
 ## Informations pour lancer le projet :
 Pour lancer le projet il faut taper : 
-**npm run dev** sur l'ip : [127.0.0.1:3000](http://127.0.0.1:3000)
+**npm run dev** et aller sur l'adresse IP : [127.0.0.1:3000](http://127.0.0.1:3000) OU l'adresse IP de son pc. 
 
 ## V1 : Accès Professeur  / Authentification
 - Ajout de l'authentification
