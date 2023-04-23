@@ -110,6 +110,7 @@ app.post('/auth', urlencodedParser, (req:Request, res:Response, next) => {
     if (req.body.type == "prof") {
         req.session.typeSession = "prof";
         res.redirect('/prof/auth_prof');
+        
     } else if (req.body.type == "eleve") {
         req.session.typeSession = "eleve";
         res.redirect('/');
@@ -121,6 +122,7 @@ app.post('/auth', urlencodedParser, (req:Request, res:Response, next) => {
 // Routage pour la gestion des erreurs (page inexistante, non autorisé, etc.)
 app.get('/redirect_handler', (req:Request, res:Response, NextFunction) => {
     if (typeof req.session.userid !== 'undefined' && typeof req.session.typeSession !== 'undefined') {
+        console.log(req.session);
         if (req.session.typeSession == "prof") {
             res.redirect("/prof/accueil");
         } else if (req.session.typeSession == "eleve") {
@@ -170,7 +172,7 @@ app.all('*', UnknownRoutesHandler);
 
 // Gestion des erreurs 
 // Doit être le dernier use
-// app.use(ExceptionsHandler);
+app.use(ExceptionsHandler);
 
 // écoute du port 3000 sur l'adresse spécifiée
 app.listen(3000, "0.0.0.0", () => {
