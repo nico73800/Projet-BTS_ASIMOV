@@ -65,7 +65,6 @@ export function getMatiereProf(idProf:number, req: Request, res: Response) {
 }
 
 // Fonction modèle de récupération des données de la classe d'un prof dans la BDD 
-// Pas utilisée encore (à faire V2)
 export function getClasseProf(idProf: number, req: Request, res: Response) {
     bdd.module_connexion.query(
         "SELECT idSection, libelleSection FROM Section WHERE idProfesseur = ?", 
@@ -86,39 +85,53 @@ export function getClasseProf(idProf: number, req: Request, res: Response) {
         });
 }
 
+// Fonction modèle de récupération des notes de la classe 
 export function getNoteClasse(req: Request, res: Response) {
     let id = req.params.id;
+    
+    // On test les différentes valeurs de l'ID
     if (id == '' || id == undefined || id == '0') {
         res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], error: "Saisie invalide"});
     } else {
+        // Récupération des notes concernant le prof
         bdd.module_connexion.query(
             "SELECT e.idEleve, nomEleve, prenomEleve, libelleSection, note, pm.idMatiere FROM Notes n, Eleve e, Section s, Prof_Matiere pm WHERE pm.idMatiere = n.idMatiere AND n.idEleve = e.idEleve AND e.idSection = s.idSection AND pm.idProfesseur = ? AND s.idSection = ?",
             [req.session.userid[0]['idProfesseur'], id], (err, result, fields) => {
-                if (typeof(result) == 'undefined' || Object(result) == '') {                    
+                // Si le résultat est vide : 
+                if (typeof(result) == 'undefined' || Object(result) == '') {    
+                    
+                    // On récupère les élèves de la section 
                     bdd.module_connexion.query(
                         "SELECT idEleve, nomEleve, prenomEleve, libelleSection FROM Eleve e, Section s WHERE e.idSection = s.idSection AND s.idSection = ?",
                         [id], (err2, result2, fields) => {
+                            // Si y a une erreur 
                             if (err) {
                                 console.log(err2);    
                                 res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], error: "Une erreur est survenue" + err.message});   
                             
+                            // Si le résultat de la deuxième requête est vide
                             } else if (typeof(result2) == 'undefined' || Object(result2) == '') {
+                                // On récupère la section 
                                 bdd.module_connexion.query(
                                     "SELECT libelleSection FROM Section WHERE idSection = ?",
                                     [id], (err3, result3, fields) => {
                                         res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], section_null: result3});   
                                     });
             
+                            // Si y a pas d'erreur ni de résultat vide
                             } else {
                                 res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], section: result2});
                             }
                         }
                     );
 
+                // Si y a une erreur 
                 } else if (err) {
                     res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], error: "Une erreur est survenue" + err.message});
 
+                // Si y a pas de résultat vide 
                 } else {
+                    // On récupère les élèves dans la section 
                     bdd.module_connexion.query(
                         "SELECT e.idEleve, nomEleve, prenomEleve FROM Eleve e, Section s WHERE e.idSection = s.idSection AND s.idSection = ?",
                         [id], (err, resEleve, fields) => {
@@ -133,37 +146,44 @@ export function getNoteClasse(req: Request, res: Response) {
     }
 }
 
+// On récupère les élèves
 export function getEleve(req: Request, res: Response) {
     let id = req.params.id;
+
+    // On récupère les élèves 
     bdd.module_connexion.query(
         "SELECT idEleve, nomEleve, prenomEleve, libelleSection FROM Eleve e, Section s WHERE e.idSection = s.idSection AND idEleve = ?", [id],
         (err, result, fields) => {
+            
+            // Si le résultat est vide 
             if (typeof(result) == 'undefined' || Object(result) == '') {                    
                 console.log(result);
                 res.render('saisie_notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur']});
 
+            // Si y a des erreurs
             } else if (err) {
                 res.render('saisie_notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], error: "Une erreur est survenue" + err.message});
 
+            // Si y a ni résultat vide ni des erreurs 
             } else {
                 console.log(result);
+                // On récupère les matières et libellé 
                 bdd.module_connexion.query(
                     "SELECT pm.idMatiere, libelle FROM Prof_Matiere pm, Matiere m WHERE pm.idMatiere = m.idMatiere AND idProfesseur = ?", [req.session.userid[0]['idProfesseur']],
                     (err, resM, fields) => { 
                         console.log(req.session.userid[0]['idProfesseur']);
-                        
                         console.log(resM);
                         console.log(result);
                         res.render('saisie_notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'],  idProf: req.session.userid[0]['idProfesseur'], eleve: result, matiere: resM});
 
                     });
-                // res.render('saisie_notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], eleve: result});   
             }
         }
     );
 
 }
 
+// Fonction d'ajout des notes
 export function addNote(req: Request, res: Response) {
     let note = req.body.note;
     let idProf = req.body.idProf;
@@ -171,16 +191,20 @@ export function addNote(req: Request, res: Response) {
     let idEleve = req.params.id;
     console.log(note, idProf, idMatiere, idEleve);
     
+    // Insertion des notes 
     bdd.module_connexion.query(
         "INSERT INTO Notes (note, idProfesseur, idMatiere, idEleve) VALUES (?,?,?,?)", [note, idProf, idMatiere, idEleve],
-        (err, result, fields) => {            
+        (err, result, fields) => {   
+            // Si le résultat des vides
             if (typeof(result) == 'undefined' || Object(result) == '') {                    
                 console.log(result);
                 res.redirect('/prof/accueil');
 
+            // Si y a des erreurs
             } else if (err) {
                 res.redirect('/prof/accueil');
-                
+
+            // Si y a pas d'erreurs ni de résultat vide
             } else {
                 res.redirect('/prof/accueil');
             }
