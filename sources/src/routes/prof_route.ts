@@ -35,14 +35,17 @@ router_prof.get('/classes', (req: Request, res: Response) => {
     ctrl_prof.classe(req, res);
 });
 
+// Routage vers la lecture des notes
 router_prof.get('/notes/:id', (req: Request, res: Response) => {
     ctrl_prof.noteParSection(req, res);
 });
 
+// Routage vers la saisie des notes
 router_prof.get('/saisie_notes/:id',(req: Request, res: Response) => {
     ctrl_prof.getEleve(req, res);
 });
 
+// Routage vers l'ajout des notes
 router_prof.post('/addNote/:id',urlencodedParser, (req: Request, res: Response) => {
     ctrl_prof.addNote(req, res);
 });

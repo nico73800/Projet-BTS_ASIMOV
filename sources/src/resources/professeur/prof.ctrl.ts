@@ -31,9 +31,11 @@ export function accueil(req: Request, res: Response) {
 
 // Fonction accueil (utilisateur déjà authentifié)
 export function accueil_noauth(req: Request, res: Response) {
+    // On test si l'id utilisateur est non défini
     if (typeof req.session.userid === 'undefined') {
         req.session.error = "Identifiant utilisateur inexistant !"
         res.redirect('/');
+    // Si non : alors on redirige vers la page demandée
     } else {
         res.render('accueil', { user: req.session.userid});
     }
@@ -74,7 +76,9 @@ export function noteParSection(req: Request, res: Response) {
     }
 }
 
+// Fonction pour avoir les élèves
 export function getEleve(req: Request, res: Response) {
+    // On test si l'id utilisateur est non défini
     if (typeof req.session.userid == 'undefined') {
         res.redirect('/');
     // Si non : alors on redirige vers la page demandée
@@ -84,7 +88,9 @@ export function getEleve(req: Request, res: Response) {
     
 }
 
+// Fonction d'ajout des notes 
 export function addNote(req: Request, res: Response) {
+    // On test si l'id utilisateur est non défini
     if (typeof req.session.userid == 'undefined') {
         res.redirect('/');
     // Si non : alors on redirige vers la page demandée
