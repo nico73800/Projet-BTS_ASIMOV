@@ -4,7 +4,6 @@ export let module_connexion =
 	mysql.createConnection({
 		host: 'localhost',
 		user:'root',
-		// password:'root',
-		password:'19Lun@73',
+		password:'root',
 		database:'Asimov'
 	})
