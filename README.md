@@ -23,12 +23,12 @@ Pour lancer le projet il faut taper :
 ## V2 : Accès Professeur / CRUD notes (En cours d'implémentation)
 ### Fonctionnalités implémentées 
 - Lecture des notes 
-
-### En cours d'implémentation 
 - Ajout d'une note pour un élève
 
-### A implémenter 
+### En cours d'implémentation 
 - suppresion et modification des notes
+
+### A implémenter 
 - Correction de l'implémentation de l'authentification des enseignants :
     - Utilisation d'un couple {Login + Password} à la place du couple {ID + Password}
 
