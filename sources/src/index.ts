@@ -20,9 +20,8 @@ import session from 'express-session';
 let app = express();
 let urlencodedParser = bodyParser.urlencoded({ extended: true })
 
-// Constnate pour générer des UUID (identifiant unique universel)
+// Constante pour générer des UUID (identifiant unique universel)
 const genuuid = require('uuid');
-// const MySQLStore = require('express-mysql-session');
 
 const corsOptions ={
     origin:'http://localhost:3000', 
@@ -42,10 +41,11 @@ app.use(express.json());
 const options = {
     connectionLimit: 10,
     user: 'root',
-    password: 'root',
+    // password:'root',
+    password:'19Lun@73',
     database: 'Asimov',
     host: 'localhost',
-    port: 3306,
+    // port: 3306,
 }
 
 let sess_id = function () {
@@ -173,7 +173,7 @@ app.all('*', UnknownRoutesHandler);
 
 // Gestion des erreurs 
 // Doit être le dernier use
-app.use(ExceptionsHandler);
+// app.use(ExceptionsHandler);
 
 // écoute du port 3000 sur l'adresse spécifiée
 app.listen(3000, "0.0.0.0", () => {

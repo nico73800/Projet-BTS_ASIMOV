@@ -24,7 +24,30 @@
 
             <section class="section">
                 <% if (typeof note=='undefined' || note.length==0) { %>
-                    <h2 class="subtitle">Aucune note pour la section : <%= section[0]['libelleSection'] %></h2>
+                    <% if (typeof section == 'undefined' || note.length==0) { %>
+                    <h2 class="subtitle">Aucune note pour la section : <%= section_null[0]['libelleSection'] %></h2>
+                    <% } else { %> 
+                        <article>
+                            <h2 class="subtitle"> Eleve de la section :</h2>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th><abbr title="Nom">Nom élève </abbr></th>
+                                        <th><abbr title="Prénom">Prénom élève</abbr></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <% section.forEach(element => { %>
+                                    <tr>
+                                        <td> <%= element['nomEleve'] %> </td>
+                                        <td> <%= element['prenomEleve'] %> </td>
+                                        <td> <a href="/prof/saisie_notes/<%= element['idEleve'] %>">Ajout d'une note</a></td>
+                                    </tr>
+                                <% }) %>
+                                </tbody>
+                            </table>
+                        </article>
+                    <% } %>
                 <% } else { %>
                     <article>
                         <h2 class="subtitle"> Les notes de la section : <%= note[0]['libelleSection'] %> </h2>
@@ -56,6 +79,7 @@
                                     <td> <%= element['nomEleve'] %> </td>
                                     <td> <%= element['prenomEleve'] %> </td>
                                     <td> <%= element['note'] %> </td>
+                                    <td> <a href="/prof/saisie_notes/<%= element['idEleve'] %>">Ajout d'une note</a></td>
                                 </tr>
                             <% }) %>
                             </tbody>

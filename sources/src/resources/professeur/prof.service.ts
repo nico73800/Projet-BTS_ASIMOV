@@ -92,22 +92,30 @@ export function getNoteClasse(req: Request, res: Response) {
         res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], error: "Saisie invalide"});
     } else {
         bdd.module_connexion.query(
-            "SELECT nomEleve, prenomEleve, libelleSection, note FROM Notes n, Eleve e, Section s WHERE n.idEleve = e.idEleve AND e.idSection = s.idSection AND s.idSection = ?",
+            "SELECT e.idEleve, nomEleve, prenomEleve, libelleSection, note FROM Notes n, Eleve e, Section s WHERE n.idEleve = e.idEleve AND e.idSection = s.idSection AND s.idSection = ?",
             [id], (err, result, fields) => {
                 if (typeof(result) == 'undefined' || Object(result) == '') {                    
                     bdd.module_connexion.query(
-                        "SELECT libelleSection FROM Section WHERE idSection = ?",
+                        "SELECT idEleve, nomEleve, prenomEleve, libelleSection FROM Eleve e, Section s WHERE e.idSection = s.idSection AND s.idSection = ?",
                         [id], (err2, result2, fields) => {
                             if (err) {
-                                console.log(err2);
-                                
+                                console.log(err2);    
                                 res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], error: "Une erreur est survenue" + err.message});   
+                            
+                            } else if (typeof(result2) == 'undefined' || Object(result2) == '') {
+                                bdd.module_connexion.query(
+                                    "SELECT libelleSection FROM Section WHERE idSection = ?",
+                                    [id], (err3, result3, fields) => {
+                                        res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], section_null: result3});   
+                                    });
+            
                             } else {
                                 console.log(result2);
 
                                 res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], section: result2});
                             }
-                        });
+                        }
+                    );
 
                 } else if (err) {
                     res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], error: "Une erreur est survenue" + err.message});
@@ -115,6 +123,28 @@ export function getNoteClasse(req: Request, res: Response) {
                 } else {
                     res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], note: result});   
                 }
-            });
+            }
+        );
     }
+}
+
+export function getEleve(req: Request, res: Response) {
+    let id = req.params.id;
+    bdd.module_connexion.query(
+        "SELECT idEleve, nomEleve, prenomEleve, libelleSection FROM Eleve e, Section s WHERE e.idSection = s.idSection AND idEleve = ?", [id],
+        (err, result, fields) => {            
+            if (typeof(result) == 'undefined' || Object(result) == '') {                    
+                console.log(result);
+                res.render('saisie_notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur']});
+
+            } else if (err) {
+                res.render('saisie_notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], error: "Une erreur est survenue" + err.message});
+
+            } else {
+                console.log(result);
+                res.render('saisie_notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], eleve: result});   
+            }
+        }
+    );
+
 }

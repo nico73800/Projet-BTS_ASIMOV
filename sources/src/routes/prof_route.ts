@@ -38,3 +38,7 @@ router_prof.get('/classes', (req: Request, res: Response) => {
 router_prof.get('/notes/:id', (req: Request, res: Response) => {
     ctrl_prof.noteParSection(req, res);
 });
+
+router_prof.get('/saisie_notes/:id',(req: Request, res: Response) => {
+    ctrl_prof.getEleve(req, res);
+});

@@ -73,3 +73,13 @@ export function noteParSection(req: Request, res: Response) {
         profService.getNoteClasse(req, res);   
     }
 }
+
+export function getEleve(req: Request, res: Response) {
+    if (typeof req.session.userid == 'undefined') {
+        res.redirect('/');
+    // Si non : alors on redirige vers la page demandée
+    } else {        
+        profService.getEleve(req, res);   
+    }
+    
+}
