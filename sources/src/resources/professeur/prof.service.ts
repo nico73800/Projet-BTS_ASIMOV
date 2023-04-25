@@ -92,8 +92,8 @@ export function getNoteClasse(req: Request, res: Response) {
         res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], error: "Saisie invalide"});
     } else {
         bdd.module_connexion.query(
-            "SELECT e.idEleve, nomEleve, prenomEleve, libelleSection, note FROM Notes n, Eleve e, Section s WHERE n.idEleve = e.idEleve AND e.idSection = s.idSection AND s.idSection = ?",
-            [id], (err, result, fields) => {
+            "SELECT e.idEleve, nomEleve, prenomEleve, libelleSection, note, pm.idMatiere FROM Notes n, Eleve e, Section s, Prof_Matiere pm WHERE pm.idMatiere = n.idMatiere AND n.idEleve = e.idEleve AND e.idSection = s.idSection AND pm.idProfesseur = ? AND s.idSection = ?",
+            [req.session.userid[0]['idProfesseur'], id], (err, result, fields) => {
                 if (typeof(result) == 'undefined' || Object(result) == '') {                    
                     bdd.module_connexion.query(
                         "SELECT idEleve, nomEleve, prenomEleve, libelleSection FROM Eleve e, Section s WHERE e.idSection = s.idSection AND s.idSection = ?",
@@ -123,6 +123,7 @@ export function getNoteClasse(req: Request, res: Response) {
                         "SELECT e.idEleve, nomEleve, prenomEleve FROM Eleve e, Section s WHERE e.idSection = s.idSection AND s.idSection = ?",
                         [id], (err, resEleve, fields) => {
                             console.log(resEleve);
+                            console.log(result);
                             res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], eleves: resEleve, note: result});   
                     });
 
