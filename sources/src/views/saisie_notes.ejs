@@ -27,19 +27,31 @@
                 <% } else { %>
                     <article>
                         <h2 class="subtitle"> Saisie de notes pour : <%= eleve[0]['nomEleve'] %> <%= eleve[0]['prenomEleve'] %> </h2>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th><abbr title="Nom"> Note : </abbr></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td> <input type="Note"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-
+                        <form class="is-inline-block" action="/prof/addNote/<%= eleve[0]['idEleve'] %>" method="post"> 
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th><abbr title="Note de l'élève"> Note : </abbr></th>
+                                        <th><abbr title="Matière du professeur"> Matière : </abbr></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <input type="hidden" id="idProf" name="idProf" value="<%= idProf %>" class="input">
+                                            <input id="note" name="note" class="input" type="number">
+                                        </td>
+                                        <td>
+                                            <input class="input" type="hidden" id="idMatiere" name="idMatiere" value="<%= matiere[0]['idMatiere'] %>">
+                                            <input class="input" type="text" name="matiere" id="matiere" disabled value="<%= matiere[0]['libelle'] %>">
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="button is-link is-rounded"> Valider </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
                     </article>
                 <% } %>
             </section>

@@ -110,8 +110,6 @@ export function getNoteClasse(req: Request, res: Response) {
                                     });
             
                             } else {
-                                console.log(result2);
-
                                 res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], section: result2});
                             }
                         }
@@ -121,7 +119,13 @@ export function getNoteClasse(req: Request, res: Response) {
                     res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], error: "Une erreur est survenue" + err.message});
 
                 } else {
-                    res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], note: result});   
+                    bdd.module_connexion.query(
+                        "SELECT e.idEleve, nomEleve, prenomEleve FROM Eleve e, Section s WHERE e.idSection = s.idSection AND s.idSection = ?",
+                        [id], (err, resEleve, fields) => {
+                            console.log(resEleve);
+                            res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], eleves: resEleve, note: result});   
+                    });
+
                 }
             }
         );
@@ -132,7 +136,7 @@ export function getEleve(req: Request, res: Response) {
     let id = req.params.id;
     bdd.module_connexion.query(
         "SELECT idEleve, nomEleve, prenomEleve, libelleSection FROM Eleve e, Section s WHERE e.idSection = s.idSection AND idEleve = ?", [id],
-        (err, result, fields) => {            
+        (err, result, fields) => {
             if (typeof(result) == 'undefined' || Object(result) == '') {                    
                 console.log(result);
                 res.render('saisie_notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur']});
@@ -142,7 +146,42 @@ export function getEleve(req: Request, res: Response) {
 
             } else {
                 console.log(result);
-                res.render('saisie_notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], eleve: result});   
+                bdd.module_connexion.query(
+                    "SELECT pm.idMatiere, libelle FROM Prof_Matiere pm, Matiere m WHERE pm.idMatiere = m.idMatiere AND idProfesseur = ?", [req.session.userid[0]['idProfesseur']],
+                    (err, resM, fields) => { 
+                        console.log(req.session.userid[0]['idProfesseur']);
+                        
+                        console.log(resM);
+                        console.log(result);
+                        res.render('saisie_notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'],  idProf: req.session.userid[0]['idProfesseur'], eleve: result, matiere: resM});
+
+                    });
+                // res.render('saisie_notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], eleve: result});   
+            }
+        }
+    );
+
+}
+
+export function addNote(req: Request, res: Response) {
+    let note = req.body.note;
+    let idProf = req.body.idProf;
+    let idMatiere = req.body.idMatiere;
+    let idEleve = req.params.id;
+    console.log(note, idProf, idMatiere, idEleve);
+    
+    bdd.module_connexion.query(
+        "INSERT INTO Notes (note, idProfesseur, idMatiere, idEleve) VALUES (?,?,?,?)", [note, idProf, idMatiere, idEleve],
+        (err, result, fields) => {            
+            if (typeof(result) == 'undefined' || Object(result) == '') {                    
+                console.log(result);
+                res.redirect('/prof/accueil');
+
+            } else if (err) {
+                res.redirect('/prof/accueil');
+                
+            } else {
+                res.redirect('/prof/accueil');
             }
         }
     );

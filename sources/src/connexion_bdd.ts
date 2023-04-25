@@ -5,5 +5,6 @@ export let module_connexion =
 		host: 'localhost',
 		user:'root',
 		// password:'root',
+		password:'19Lun@73',
 		database:'Asimov'
 	})

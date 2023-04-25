@@ -54,13 +54,13 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th><abbr title="Nombre de plus de 50% de réussite">Nombre d'élève avec plus de 50% de réussite</abbr></th>
+                                    <th><abbr title="Nombre au moins 50% de réussite">Nombre d'élève avec au moins 50% de réussite</abbr></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <% let sum = 0 %>
-                                    <% note.forEach(element => { if(Number(element['note']) > 50) { sum++ }} ) %>
+                                    <% note.forEach(element => { if(Number(element['note']) >= 50) { sum++ }} ) %>
                                     <td> <%= sum %> </td>
                                 </tr>
                             </tbody>
@@ -70,24 +70,28 @@
                                 <tr>
                                     <th><abbr title="Nom">Nom élève </abbr></th>
                                     <th><abbr title="Prénom">Prénom élève</abbr></th>
-                                    <th><abbr title="Note">Note</abbr></th>
+                                    <th><abbr title="Note">Notes</abbr></th>
                                 </tr>
                             </thead>
                             <tbody>
-                            <% note.forEach(element => { %>
-                                <tr>
-                                    <td> <%= element['nomEleve'] %> </td>
-                                    <td> <%= element['prenomEleve'] %> </td>
-                                    <td> <%= element['note'] %> </td>
-                                    <td> <a href="/prof/saisie_notes/<%= element['idEleve'] %>">Ajout d'une note</a></td>
-                                </tr>
-                            <% }) %>
+                                <% eleves.forEach(elem => { %>
+                                    <tr>
+                                        <td> <%= elem['nomEleve'] %> </td>
+                                        <td> <%= elem['prenomEleve'] %> </td>
+                                        <td>
+                                            <% note.forEach(element => { %>
+                                                <% if (elem['idEleve'] == element['idEleve']) { %>
+                                                    <p> <%= element['note'] %> </p>
+                                                <% } %>
+                                            <% }) %>
+                                        </td>
+                                        <td> <a class="button is-link is-rounded" href="/prof/saisie_notes/<%= elem['idEleve'] %>"> Ajout d'une note </a> </td>
+                                    </tr>
+                                <% }) %>
                             </tbody>
-
-
-                <% } %>
-                    </article>
-                    <br>
+                        </table>
+                    <% } %>
+                </article>
             </section>
         <% } else { %>
             <h1 class="title"> Problème avec les idenfitifiants </h1>
