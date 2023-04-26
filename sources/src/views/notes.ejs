@@ -26,9 +26,14 @@
                 <% if (typeof note=='undefined' || note.length==0) { %>
                     <% if (typeof section == 'undefined' || note.length==0) { %>
                         <% if (typeof section_null == 'undefined' || section_null.length==0) { %>
-                            <h2 class="subtitle">Aucune section existante </h2>
-                        <% } else { %> 
-                            <h2 class="subtitle">Aucune note pour la section : <%= section_null[0]['libelleSection'] %></h2>
+                            <article>
+                                <h2 class="subtitle">Aucune section existante </h2>
+                            </article>
+
+                        <% } else { %>
+                            <article>
+                                <h2 class="subtitle">Aucune note pour la section : <%= section_null[0]['libelleSection'] %></h2>
+                            </article>
                         <% } %>
                     <% } else { %>
                         <article>
@@ -95,7 +100,6 @@
                             </tbody>
                         </table>
                     <% } %>
-                </article>
             </section>
         <% } else { %>
             <h1 class="title"> Problème avec les idenfitifiants </h1>
