@@ -28,6 +28,7 @@ const corsOptions ={
     credentials:true,            
     optionSuccessStatus:200,
  }
+ 
  app.use(cors(corsOptions));
 
 // Paramétrage de l'app
@@ -41,11 +42,9 @@ app.use(express.json());
 const options = {
     connectionLimit: 10,
     user: 'root',
-    // password:'root',
     password:'root',
     database: 'Asimov',
     host: 'localhost',
-    // port: 3306,
 }
 
 let sess_id = function () {

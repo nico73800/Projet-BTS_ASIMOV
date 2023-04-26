@@ -115,7 +115,13 @@ export function getNoteClasse(req: Request, res: Response) {
                                 bdd.module_connexion.query(
                                     "SELECT libelleSection FROM Section WHERE idSection = ?",
                                     [id], (err3, result3, fields) => {
-                                        res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], section_null: result3});   
+                                        if (err3) {
+                                                res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], error: "Une erreur est survenue" + err3.message});
+                                            } else if (typeof(result3) == 'undefined' || Object(result3) == '') {
+                                                res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur']});
+                                            } else {
+                                                res.render('notes', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], section_null: result3});
+                                            }
                                     });
             
                             // Si y a pas d'erreur ni de résultat vide

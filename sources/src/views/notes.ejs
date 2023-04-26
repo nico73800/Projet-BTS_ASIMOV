@@ -25,8 +25,12 @@
             <section class="section">
                 <% if (typeof note=='undefined' || note.length==0) { %>
                     <% if (typeof section == 'undefined' || note.length==0) { %>
-                    <h2 class="subtitle">Aucune note pour la section : <%= section_null[0]['libelleSection'] %></h2>
-                    <% } else { %> 
+                        <% if (typeof section_null == 'undefined' || section_null.length==0) { %>
+                            <h2 class="subtitle">Aucune section existante </h2>
+                        <% } else { %> 
+                            <h2 class="subtitle">Aucune note pour la section : <%= section_null[0]['libelleSection'] %></h2>
+                        <% } %>
+                    <% } else { %>
                         <article>
                             <h2 class="subtitle"> Eleve de la section :</h2>
                             <table class="table">
