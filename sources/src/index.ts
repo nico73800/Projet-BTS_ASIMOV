@@ -42,7 +42,7 @@ const options = {
     connectionLimit: 10,
     user: 'root',
     // password:'root',
-    password:'19Lun@73',
+    password:'root',
     database: 'Asimov',
     host: 'localhost',
     // port: 3306,
