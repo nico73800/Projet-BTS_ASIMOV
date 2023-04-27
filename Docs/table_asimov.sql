@@ -75,7 +75,8 @@ CREATE TABLE logs(
    idLogs INT NOT NULL PRIMARY KEY auto_increment,
    actionLogs VARCHAR(50) NOT NULL CHECK (actionLogs = 'supprimer' OR actionLogs = 'modifier' OR actionLogs = 'lire'),
    userLogs INT NOT NULL,
-   tableLogs VARCHAR(100) NOT NULL
+   tableLogs VARCHAR(100) NOT NULL,
+   resultat TEXT
 );
 
 
