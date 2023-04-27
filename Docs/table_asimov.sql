@@ -70,6 +70,14 @@ CREATE TABLE Prof_Matiere(
    FOREIGN KEY(idMatiere) REFERENCES Matiere(idMatiere)
 );
 
+-- Table de log 
+CREATE TABLE logs(
+   idLogs INT NOT NULL PRIMARY KEY auto_increment,
+   actionLogs VARCHAR(50) NOT NULL CHECK (actionLogs = 'supprimer' OR actionLogs = 'modifier' OR actionLogs = 'lire'),
+   userLogs INT NOT NULL,
+   tableLogs VARCHAR(100) NOT NULL
+);
+
 
 -- Partie 2 / Insertion 
 INSERT INTO Professeur (nomProfesseur, prenomProfesseur, mailProfesseur, estReferent, estProviseur, password) VALUES ('Louka', 'Lucas', 'louka.lucas@academ-gr.fr', '1', '1', SHA1('abcd'));
@@ -103,3 +111,4 @@ INSERT INTO Prof_Matiere VALUES (2, 1);
 INSERT INTO Notes VALUES (NULL, 10.0, 2, 3, 1);
 
 INSERT INTO Notes VALUES (NULL, 20.0, 2, 3, 2);
+
