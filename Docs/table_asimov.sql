@@ -73,7 +73,7 @@ CREATE TABLE Prof_Matiere(
 -- Table de log 
 CREATE TABLE logs(
    idLogs INT NOT NULL PRIMARY KEY auto_increment,
-   actionLogs VARCHAR(50) NOT NULL CHECK (actionLogs = 'supprimer' OR actionLogs = 'modifier' OR actionLogs = 'lire'),
+   actionLogs VARCHAR(50) NOT NULL CHECK (actionLogs = 'supprimer' OR actionLogs = 'modifier' OR actionLogs = 'lire' OR actionLogs = 'connexion'),
    userLogs INT NOT NULL,
    tableLogs VARCHAR(100) NOT NULL,
    resultat TEXT
