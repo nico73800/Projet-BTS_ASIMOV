@@ -26,12 +26,13 @@ Pour lancer le projet il faut taper :
 - Ajout d'une note pour un élève
 
 ### En cours d'implémentation 
-- Suppresion des notes
+- Implémentation d'un journal de log 
 
 ### A implémenter 
 - Correction de l'implémentation de l'authentification des enseignants :
     - Utilisation d'un couple {Login + Password} à la place du couple {ID + Password}
 - Modification des notes
+- Suppresion des notes
 
 ### Notes techniques : 
 - Corrections de bugs dans [prof.service.ts](https://github.com/nico73800/Projet-BTS_ASIMOV/blob/main/sources/src/resources/professeur/prof.service.ts) :
