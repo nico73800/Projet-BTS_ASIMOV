@@ -26,7 +26,9 @@ export function findProf(req: Request, res: Response) {
                 // Test des erreurs 
                 if (err) {
                     bdd.module_connexion.query("INSERT INTO logs (actionLogs, userLogs, tableLogs, resultat) VALUES ('connexion', ?, 'professeur', 'Erreur :'" + err.message + ")", [id], (err, result, fields) => {
-
+                        if (err) {
+                            console.log(err.message);
+                        }
                     })
 
                     res.render('connexion_prof', {message:"Erreur : " + err.message});
@@ -35,6 +37,9 @@ export function findProf(req: Request, res: Response) {
                     // Test en cas de vide du résultat 
                     if (result.toString() == '') {
                         bdd.module_connexion.query("INSERT INTO logs (actionLogs, userLogs, tableLogs, resultat) VALUES ('connexion', ?, 'professeur', 'Erreur : aucun résultat')", [id], (err, result, fields) => {
+                            if (err) {
+                                console.log(err.message);
+                            }
                         })
                         res.render('connexion_prof', {message:"Aucun utilisateur ne correspond !"});
 
@@ -65,6 +70,11 @@ export function getMatiereProf(idProf:number, req: Request, res: Response) {
         [idProf], (err, result, fields) => {
             // Test des erreurs 
             if (err) {
+                bdd.module_connexion.query("INSERT INTO logs (actionLogs, userLogs, tableLogs, resultat) VALUES ('connexion', ?, 'professeur', 'Erreur :'" + err.message + ")", [idProf], (err, result, fields) => {
+                    if (err) {
+                        console.log(err.message);
+                    }
+                })
                 res.render('matieres', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], error: "Une erreur est survenue :" + err.message});
             } else {
                 // Test en cas de vide du résultat 
