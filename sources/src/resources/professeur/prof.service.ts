@@ -220,25 +220,33 @@ export function addNote(req: Request, res: Response) {
     let idMatiere = req.body.idMatiere;
     let idEleve = req.params.id;
     console.log(note, idProf, idMatiere, idEleve);
-    
-    // Insertion des notes 
-    bdd.module_connexion.query(
-        "INSERT INTO Notes (note, idProfesseur, idMatiere, idEleve) VALUES (?,?,?,?)", [note, idProf, idMatiere, idEleve],
-        (err, result, fields) => {   
-            // Si le résultat des vides
-            if (typeof(result) == 'undefined' || Object(result) == '') {                    
-                console.log(result);
-                res.redirect('/prof/accueil');
 
-            // Si y a des erreurs
-            } else if (err) {
-                res.redirect('/prof/accueil');
+    bdd.module_connexion.query("SELECT * from Prof_Matiere WHERE idProfesseur = ? AND idMatiere = ?", [idProf, idMatiere], (err, result, fields) => {
+        if (typeof(result) == 'undefined' || Object(result) == '') {
+            res.redirect('/prof/accueil');
+        } else if (err) {
+            res.redirect('/prof/accueil');
+        } else {
+            // Insertion des notes 
+            bdd.module_connexion.query(
+                "INSERT INTO Notes (note, idProfesseur, idMatiere, idEleve) VALUES (?,?,?,?)", [note, idProf, idMatiere, idEleve],
+                (err, result, fields) => {   
+                    // Si le résultat des vides
+                    if (typeof(result) == 'undefined' || Object(result) == '') {                    
+                        console.log(result);
+                        res.redirect('/prof/accueil');
 
-            // Si y a pas d'erreurs ni de résultat vide
-            } else {
-                res.redirect('/prof/accueil');
-            }
+                    // Si y a des erreurs
+                    } else if (err) {
+                        res.redirect('/prof/accueil');
+
+                    // Si y a pas d'erreurs ni de résultat vide
+                    } else {
+                        res.redirect('/prof/accueil');
+                    }
+                }
+            );
         }
-    );
-
+    })
+    
 }
