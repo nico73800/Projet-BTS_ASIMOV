@@ -70,7 +70,7 @@ export function getMatiereProf(idProf:number, req: Request, res: Response) {
         [idProf], (err, result, fields) => {
             // Test des erreurs 
             if (err) {
-                bdd.module_connexion.query("INSERT INTO logs (actionLogs, userLogs, tableLogs, resultat) VALUES ('connexion', ?, 'professeur', 'Erreur :'" + err.message + ")", [idProf], (err, result, fields) => {
+                bdd.module_connexion.query("INSERT INTO logs (actionLogs, userLogs, tableLogs, resultat) VALUES ('lire', ?, 'Matiere, Prof_Matiere', 'Erreur :" + err.message + "')", [idProf], (err, result, fields) => {
                     if (err) {
                         console.log(err.message);
                     }
@@ -79,8 +79,19 @@ export function getMatiereProf(idProf:number, req: Request, res: Response) {
             } else {
                 // Test en cas de vide du résultat 
                 if (typeof(result) == 'undefined' || Object(result) == '') {
+                    bdd.module_connexion.query("INSERT INTO logs (actionLogs, userLogs, tableLogs, resultat) VALUES ('lire', ?, 'Matiere, Prof_Matiere', 'Erreur : Résultat vide !')", [idProf], (err, result, fields) => {
+                        if (err) {
+                            console.log(err.message);
+                        }
+                    })
                     res.render('matieres', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur']});
                 } else {
+                    let resu = Object(req.session.userid);
+                    bdd.module_connexion.query("INSERT INTO logs (actionLogs, userLogs, tableLogs, resultat) VALUES ('lire', ?, 'Matiere, Prof_Matiere', ?)", [idProf, resu[0]['idProfesseur'] + ' ' + resu[0]['nomProfesseur'] + ' ' + resu[0]['prenomProfesseur']], (err, result, fields) => {
+                        if (err) {
+                            console.log(err.message);
+                        }
+                    })
                     res.render('matieres', {user: req.session.userid[0]['nomProfesseur'] + " " + req.session.userid[0]['prenomProfesseur'], matiere: result});
                 }
 
