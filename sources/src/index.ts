@@ -98,7 +98,7 @@ app.use(session({
 // Module personnalisé pour les sessions
 declare module 'express-session' {
     export interface Session {
-        session_id: any,
+        session_id: string,
         userid: { [key: string]: any },
         message: string;
         error: string;
