@@ -21,7 +21,7 @@ let app = express();
 let urlencodedParser = bodyParser.urlencoded({ extended: true })
 
 // Constante pour générer des UUID (identifiant unique universel)
-const genuuid = require('uuid');
+import genuuid from 'uuid';
 
 const corsOptions ={
     origin:'http://localhost:3000', 
@@ -47,6 +47,7 @@ const options = {
     host: 'localhost',
 }
 
+// Fonction de création d'un ID pour la session 
 let sess_id = function () {
     console.log("Session ID Généré : " + genuuid.v4());
     return genuuid.v4();
