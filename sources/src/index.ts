@@ -21,7 +21,7 @@ let app = express();
 let urlencodedParser = bodyParser.urlencoded({ extended: true })
 
 // Constante pour générer des UUID (identifiant unique universel)
-import genuuid from 'uuid';
+import { v4 as uuid } from 'uuid';
 
 const corsOptions ={
     origin:'http://localhost:3000', 
@@ -49,8 +49,8 @@ const options = {
 
 // Fonction de création d'un ID pour la session 
 let sess_id = function () {
-    console.log("Session ID Généré : " + genuuid.v4());
-    return genuuid.v4();
+    console.log("Session ID Généré : " + uuid());
+    return uuid();
 }
 
 const pool = mysql.createConnection(options);
@@ -93,7 +93,7 @@ declare module 'express-session' {
 }
 
 // Middleware inutile : car il stocke les sessions même après le destroy 
-// (Il les mets en cache)
+// (Il les met en cache)
 // app.use(function (req, res, next) {
 //     express.request.session = req.session;
 //     // req.session.session_id = sess_id();
@@ -173,7 +173,7 @@ app.all('*', UnknownRoutesHandler);
 
 // Gestion des erreurs 
 // Doit être le dernier use
-// app.use(ExceptionsHandler);
+app.use(ExceptionsHandler);
 
 // écoute du port 3000 sur l'adresse spécifiée
 app.listen(3000, "0.0.0.0", () => {
