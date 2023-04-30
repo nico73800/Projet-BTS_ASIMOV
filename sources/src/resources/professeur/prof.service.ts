@@ -238,25 +238,30 @@ export function addNote(req: Request, res: Response) {
         } else if (err) {
             res.redirect('/prof/accueil');
         } else {
-            // Insertion des notes 
-            bdd.module_connexion.query(
-                "INSERT INTO Notes (note, idProfesseur, idMatiere, idEleve) VALUES (?,?,?,?)", [note, idProf, idMatiere, idEleve],
-                (err, result, fields) => {   
-                    // Si le résultat des vides
-                    if (typeof(result) == 'undefined' || Object(result) == '') {                    
-                        console.log(result);
-                        res.redirect('/prof/accueil');
+            if (idProf !== req.session.userid[0]['idProfesseur']) {
+                
+            } else {
 
-                    // Si y a des erreurs
-                    } else if (err) {
-                        res.redirect('/prof/accueil');
+                // Insertion des notes 
+                bdd.module_connexion.query(
+                    "INSERT INTO Notes (note, idProfesseur, idMatiere, idEleve) VALUES (?,?,?,?)", [note, idProf, idMatiere, idEleve],
+                    (err, result, fields) => {   
+                        // Si le résultat des vides
+                        if (typeof(result) == 'undefined' || Object(result) == '') {                    
+                            console.log(result);
+                            res.redirect('/prof/accueil');
 
-                    // Si y a pas d'erreurs ni de résultat vide
-                    } else {
-                        res.redirect('/prof/accueil');
+                        // Si y a des erreurs
+                        } else if (err) {
+                            res.redirect('/prof/accueil');
+
+                        // Si y a pas d'erreurs ni de résultat vide
+                        } else {
+                            res.redirect('/prof/accueil');
+                        }
                     }
-                }
-            );
+                );
+            }
         }
     })
     
