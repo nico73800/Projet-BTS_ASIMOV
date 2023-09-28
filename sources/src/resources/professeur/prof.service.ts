@@ -238,8 +238,8 @@ export function addNote(req: Request, res: Response) {
         } else if (err) {
             res.redirect('/prof/accueil');
         } else {
-            if (idProf !== req.session.userid[0]['idProfesseur']) {
-                
+            if (idProf != req.session.userid[0]['idProfesseur']) {                
+                res.redirect('/prof/accueil');
             } else {
 
                 // Insertion des notes 
